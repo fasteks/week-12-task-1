@@ -14,7 +14,7 @@ const Main = (props) => {
       <Head title="Main" />
       <div className="flex justify-center items-center h-screen">
         <div className="bg-neutral-900 p-10 rounded-xl select-none text-white text-center font-semibold">
-          <div className="p-10">This is Main</div>
+          <div className="p-10 text-lg font-bold">This is Main</div>
           <div className="">
             <span>Enter user name: </span>
             <input
@@ -22,12 +22,12 @@ const Main = (props) => {
               id="input-field"
               value={userName}
               onChange={inputChange}
-              className="text-black m-1 p-1"
+              className="text-black m-1 p-2 rounded"
             />
             <button
               type="button"
               id="search-button"
-              className="m-7 m-0 p-1 box-border bg-red-500"
+              className="m-7 m-0 p-2 box-border bg-red-500 rounded-full"
               onClick={() => {
                 props.onChange(url)
               }}

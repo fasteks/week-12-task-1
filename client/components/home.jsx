@@ -20,8 +20,11 @@ const Home = () => {
   return (
     <div>
       <Switch>
-        <Route exact path="/:userName" component={Profile} />
         <Route exact path="/:userName/:repositoryName" component={Repository} />
+        <Route
+          path="/:userName"
+          render={(props) => <Profile {...props} onChange={onInputChange} />}
+        />
         <Route path="/" render={(props) => <Main {...props} onChange={onInputChange} />} />
       </Switch>
     </div>
