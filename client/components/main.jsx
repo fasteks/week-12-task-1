@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Head from './head'
+import { history } from '../redux/index'
 
 const Main = () => {
   const [userName, setUserName] = useState('')
@@ -23,7 +24,7 @@ const Main = () => {
               onChange={InputeChange}
               className="text-black m-1 p-1"
             />
-            <a href={url} className="p-0 m-1">
+            {/* <a href={url} className="p-0 m-1">
               <button
                 type="button"
                 id="search-button"
@@ -31,7 +32,17 @@ const Main = () => {
               >
                 Search
               </button>
-            </a>
+            </a> */}
+            <button
+              type="button"
+              id="search-button"
+              className="m-7 m-0 p-1 box-border bg-red-500"
+              onClick={() => {
+                history.push(url)
+              }}
+            >
+              Search
+            </button>
           </div>
         </div>
       </div>
