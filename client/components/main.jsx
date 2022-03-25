@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import Head from './head'
-import { history } from '../redux/index'
 
-const Main = () => {
+import Head from './head'
+
+const Main = (props) => {
   const [userName, setUserName] = useState('')
-  const InputeChange = (e) => {
+  const inputChange = (e) => {
     setUserName(e.target.value)
   }
   const url = `/${userName}`
@@ -21,24 +21,15 @@ const Main = () => {
               type="text"
               id="input-field"
               value={userName}
-              onChange={InputeChange}
+              onChange={inputChange}
               className="text-black m-1 p-1"
             />
-            {/* <a href={url} className="p-0 m-1">
-              <button
-                type="button"
-                id="search-button"
-                className="m-7 m-0 p-1 box-border bg-red-500"
-              >
-                Search
-              </button>
-            </a> */}
             <button
               type="button"
               id="search-button"
               className="m-7 m-0 p-1 box-border bg-red-500"
               onClick={() => {
-                history.push(url)
+                props.onChange(url)
               }}
             >
               Search
