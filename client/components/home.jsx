@@ -20,7 +20,10 @@ const Home = () => {
   return (
     <div>
       <Switch>
-        <Route exact path="/:userName/:repositoryName" component={Repository} />
+        <Route
+          path="/:userName/:repositoryName"
+          render={(props) => <Repository {...props} onChange={onInputChange} onHistoryChange={history.goBack} />}
+        />
         <Route
           path="/:userName"
           render={(props) => <Profile {...props} onChange={onInputChange} />}

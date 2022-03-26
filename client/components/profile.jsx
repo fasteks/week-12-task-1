@@ -18,9 +18,9 @@ const Profile = (props) => {
   return (
     <div className="flex flex-col h-screen">
       <Head title="Profile" />
-      <Header user={userName} goBack={props.onChange} className="" />
+      <Header user={userName} goBackwards={props.onChange} />
       <div className="self-center">
-        <div className="flex flex-col justify-center bg-neutral-900 p-10 rounded-xl select-none">
+        <div className="flex flex-col justify-center bg-neutral-900 p-10 mt-10 rounded-xl select-none">
           <span className="mb-5 text-white text-center font-semibold">Repositories:</span>
           <div className="mb-3 text-lime-500 font-medium border-lime-400 border-2 rounded-md">
             {repoList.map((it) => {
