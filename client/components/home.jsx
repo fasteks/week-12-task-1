@@ -22,7 +22,9 @@ const Home = () => {
       <Switch>
         <Route
           path="/:userName/:repositoryName"
-          render={(props) => <Repository {...props} onChange={onInputChange} onHistoryChange={history.goBack} />}
+          render={(props) => (
+            <Repository {...props} onChange={onInputChange} onHistoryChange={history.goBack} />
+          )}
         />
         <Route
           path="/:userName"
