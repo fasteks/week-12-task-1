@@ -37,4 +37,4 @@ const Main = () => {
 
 Main.propTypes = {}
 
-export default React.memo(Main)
+export default Main

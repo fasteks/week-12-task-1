@@ -19,4 +19,4 @@ const Home = () => {
 
 Home.propTypes = {}
 
-export default React.memo(Home)
+export default Home

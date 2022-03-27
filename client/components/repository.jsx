@@ -11,9 +11,15 @@ const Repository = () => {
   const { userName, repositoryName } = useParams()
 
   useEffect(() => {
-    axios(`https://raw.githubusercontent.com/${userName}/${repositoryName}/master/Readme.md`).then(
-      (it) => setInfo(it.data)
-    )
+    axios(`https://raw.githubusercontent.com/${userName}/${repositoryName}/master/Readme.md`)
+      .then((it) => setInfo(it.data))
+      .catch(() => {
+        axios(
+          `https://raw.githubusercontent.com/${userName}/${repositoryName}/master/README.md`
+        ).then((el) => {
+          setInfo(el.data)
+        })
+      })
     return () => {}
   }, [userName, repositoryName])
 
