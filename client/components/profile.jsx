@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+// import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import axios from 'axios'
+import { useSelector } from 'react-redux'
+// import axios from 'axios'
 
 import Head from './head'
 import Header from './header'
 
 const Profile = () => {
-  const [repoList, setRepoList] = useState([])
   const { userName } = useParams()
-
-  useEffect(() => {
-    axios(`https://api.github.com/users/${userName}/repos`).then((it) => setRepoList(it.data))
-    return () => {}
-  }, [userName])
+  const repoList = useSelector((s) => s.user.usersList)
 
   return (
     <div className="flex flex-col h-screen">
