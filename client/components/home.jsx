@@ -14,7 +14,7 @@ const Home = () => {
 
   useEffect(() => {
     history.push(url)
-    return () => {}
+    return () => { }
   }, [url])
 
   return (
