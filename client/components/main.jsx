@@ -1,21 +1,26 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { changeUser } from '../redux/reducers/current-user'
 
 import Head from './head'
 
 const Main = () => {
+  const dispatch = useDispatch()
   const [userName, setUserName] = useState('')
   const inputChange = (e) => {
     setUserName(e.target.value)
+    dispatch(changeUser(e.target.value))
   }
   const url = `/${userName}`
+  const currentUserName = useSelector((s) => s.user.currentUser)
 
   return (
     <div>
       <Head title="Main" />
       <div className="flex justify-center items-center h-screen">
         <div className="bg-neutral-900 p-10 rounded-xl select-none text-white text-center font-semibold">
-          <div className="p-10 text-lg font-bold">This is Main</div>
+          <div className="p-10 text-lg font-bold">This -{currentUserName}- is Main </div>
           <div className="">
             <span>Enter user name: </span>
             <input
