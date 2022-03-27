@@ -10,13 +10,12 @@ const Repository = () => {
   const [info, setInfo] = useState('')
   const { userName, repositoryName } = useParams()
 
-  useEffect(async () => {
-    const { data: readMe } = await axios(
-      `https://raw.githubusercontent.com/${userName}/${repositoryName}/master/Readme.md`
+  useEffect(() => {
+    axios(`https://raw.githubusercontent.com/${userName}/${repositoryName}/master/Readme.md`).then(
+      (it) => setInfo(it.data)
     )
-    setInfo(readMe)
     return () => {}
-  }, [info])
+  }, [userName, repositoryName])
 
   return (
     <div>

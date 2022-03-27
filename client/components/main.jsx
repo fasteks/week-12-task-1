@@ -25,7 +25,7 @@ const Main = () => {
               onChange={inputChange}
               className="text-black m-1 p-2 rounded"
             />
-            <Link to={url}>
+            <Link to={url} className="m-7 m-0 p-2 box-border bg-red-500 rounded-full">
               Search
             </Link>
           </div>

@@ -10,30 +10,10 @@ const Header = (props) => {
           <Link to={`/${props.user}`} id="go-repository-list" className="text-white">
             Go To Repositories List
           </Link>
-          // <button
-          //   type="button"
-          //   id="go-repository-list"
-          //   className="text-white"
-          //   onClick={() => {
-          //     props.seeRepos()
-          //   }}
-          // >
-          //   Go To Repositories List
-          // </button>
         )}
         <Link to="/" id="go-back" className="text-white ml-10">
           Go To Main
         </Link>
-        {/* <button
-          type="button"
-          id="go-back"
-          className="text-white ml-10"
-          onClick={() => {
-            props.goBackwards('/')
-          }}
-        >
-          Go To Main
-        </button> */}
       </div>
     </div>
   )

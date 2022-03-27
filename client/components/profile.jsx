@@ -9,9 +9,8 @@ const Profile = () => {
   const [repoList, setRepoList] = useState([])
   const { userName } = useParams()
 
-  useEffect(async () => {
-    const { data: repositories } = await axios(`https://api.github.com/users/${userName}/repos`)
-    setRepoList(repositories)
+  useEffect(() => {
+    axios(`https://api.github.com/users/${userName}/repos`).then((it) => setRepoList(it.data))
     return () => {}
   }, [userName])
 
@@ -35,20 +34,6 @@ const Profile = () => {
               )
             })}
           </div>
-          {/* <div className="flex justify-center">
-            <button
-              type="button"
-              className="text-white"
-              onClick={() => {
-                .onChange("/")
-              }}
-            >
-              Go To Main
-            </button>
-            <Link to="/" style={{ color: 'white' }}>
-              Go To Main
-            </Link>
-          </div> */}
         </div>
       </div>
     </div>
