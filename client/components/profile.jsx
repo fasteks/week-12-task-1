@@ -5,7 +5,7 @@ import axios from 'axios'
 import Head from './head'
 import Header from './header'
 
-const Profile = (props) => {
+const Profile = () => {
   const [repoList, setRepoList] = useState([])
   const { userName } = useParams()
 
@@ -18,7 +18,7 @@ const Profile = (props) => {
   return (
     <div className="flex flex-col h-screen">
       <Head title="Profile" />
-      <Header user={userName} goBackwards={props.onChange} />
+      <Header user={userName} />
       <div className="self-center">
         <div className="flex flex-col justify-center bg-neutral-900 p-10 mt-10 rounded-xl select-none">
           <span className="mb-5 text-white text-center font-semibold">Repositories:</span>
@@ -40,7 +40,7 @@ const Profile = (props) => {
               type="button"
               className="text-white"
               onClick={() => {
-                props.onChange("/")
+                .onChange("/")
               }}
             >
               Go To Main

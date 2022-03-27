@@ -6,7 +6,7 @@ import ReactMarkdown from 'react-markdown'
 import Head from './head'
 import Header from './header'
 
-const Repository = (props) => {
+const Repository = () => {
   const [info, setInfo] = useState('')
   const { userName, repositoryName } = useParams()
 
@@ -21,7 +21,7 @@ const Repository = (props) => {
   return (
     <div>
       <Head title="Repository" />
-      <Header user={userName} seeRepos={props.onHistoryChange} goBackwards={props.onChange} />
+      <Header user={userName} repo={repositoryName} />
       <div className="flex justify-center items-center">
         <div className="flex flex-col justify-center bg-neutral-700 p-10 select-none">
           <span className="text-white text-center font-semibold mb-5 text-lg">

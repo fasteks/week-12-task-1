@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import Head from './head'
 
-const Main = (props) => {
+const Main = () => {
   const [userName, setUserName] = useState('')
   const inputChange = (e) => {
     setUserName(e.target.value)
@@ -24,16 +25,9 @@ const Main = (props) => {
               onChange={inputChange}
               className="text-black m-1 p-2 rounded"
             />
-            <button
-              type="button"
-              id="search-button"
-              className="m-7 m-0 p-2 box-border bg-red-500 rounded-full"
-              onClick={() => {
-                props.onChange(url)
-              }}
-            >
+            <Link to={url}>
               Search
-            </button>
+            </Link>
           </div>
         </div>
       </div>
