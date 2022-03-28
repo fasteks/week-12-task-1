@@ -1,17 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import Head from './head'
 
-import { changeName } from '../redux/reducers/user'
+import { changeName, getUsers } from '../redux/reducers/user'
 
 const Main = () => {
   const dispatch = useDispatch()
   const userName = useSelector((s) => s.user.name)
+  const usersList = useSelector((s) => s.user.list)
+
+  useEffect(() => {
+    dispatch(getUsers())
+  }, [userName])
+
   return (
     <div>
       <Head title="Main" />
-      <div className="flex flex-col justify-center items-center h-screen">
+      <div className="flex flex-col justify-center items-center h-full">
         <p className="font-bold text-xl">Hello {userName}</p>
         <div>
           <input
@@ -24,6 +30,9 @@ const Main = () => {
             }}
           />
         </div>
+        {usersList.map((it) => {
+          return <div key={it.name}>{it.name}</div>
+        })}
       </div>
     </div>
   )
