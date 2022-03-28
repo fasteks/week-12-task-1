@@ -1,25 +1,27 @@
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+// import React, { useEffect } from 'react'
+import React from 'react'
+// import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 import Head from './head'
 
-import { changeName, getUsers } from '../redux/reducers/user'
+// import { changeName, getUsers } from '../redux/reducers/user'
 
 const Main = () => {
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const userName = useSelector((s) => s.user.name)
-  const usersList = useSelector((s) => s.user.list)
+  // const usersList = useSelector((s) => s.user.list)
 
-  useEffect(() => {
-    dispatch(getUsers())
-  }, [userName])
+  // useEffect(() => {
+  //   dispatch(getUsers())
+  // }, [userName])
 
   return (
     <div>
       <Head title="Main" />
       <div className="flex flex-col justify-center items-center h-full">
         <p className="font-bold text-xl">Hello {userName}</p>
-        <div>
+        {/* <div>
           <input
             type="text"
             className="border-4 border-yellow-500"
@@ -32,7 +34,7 @@ const Main = () => {
         </div>
         {usersList.map((it) => {
           return <div key={it.name}>{it.name}</div>
-        })}
+        })} */}
       </div>
     </div>
   )
