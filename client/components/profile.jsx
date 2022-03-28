@@ -1,8 +1,6 @@
 import React from 'react'
-// import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-// import axios from 'axios'
 
 import Head from './head'
 import Header from './header'
