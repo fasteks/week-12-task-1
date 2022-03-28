@@ -4,11 +4,13 @@ import cors from 'cors'
 import sockjs from 'sockjs'
 import { renderToStaticNodeStream } from 'react-dom/server'
 import React from 'react'
+import cookieParser from 'cookie-parser'
 import axios from 'axios'
 
-import cookieParser from 'cookie-parser'
 import config from './config'
 import Html from '../client/html'
+
+const { readFile, writeFile } = require('fs').promises
 
 require('colors')
 
@@ -35,15 +37,29 @@ const middleware = [
 
 middleware.forEach((it) => server.use(it))
 
-server.get('/api/v1/users', async (req, res) => {
-  const { data: users } = await axios('https://jsonplaceholder.typicode.com/users')
-  res.json(users)
+const getGoods = () => {
+  return readFile(`${__dirname}/data/goods.json`, 'utf-8')
+    .then((text) => {
+      return JSON.parse(text)
+    })
+    .catch(async () => {
+      const { data: goodsData } = await axios(
+        'https://raw.githubusercontent.com/ovasylenko/skillcrcuial-ecommerce-test-data/master/data.json'
+      )
+      writeFile(`${__dirname}/data/goods.json`, JSON.stringify(goodsData), 'utf-8')
+      return goodsData
+    })
+}
+
+server.get('/api/v1/goods', async (req, res) => {
+  const goods = await getGoods()
+  res.json(goods)
 })
 
-server.get('/api/v1/users/:name', (req, res) => {
-  const { name } = req.params
-  res.json({ name })
-})
+// server.get('/api/v1/users/:name', (req, res) => {
+//   const { name } = req.params
+//   res.json({ name })
+// })
 
 server.use('/api/', (req, res) => {
   res.status(404)

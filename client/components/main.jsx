@@ -1,27 +1,28 @@
-// import React, { useEffect } from 'react'
-import React from 'react'
-// import { useSelector, useDispatch } from 'react-redux'
-// import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
 import Head from './head'
 import Header from './header'
 
-// import { changeName, getUsers } from '../redux/reducers/user'
+import { getGoods } from '../redux/reducers/goods'
 
 const Main = () => {
-  // const dispatch = useDispatch()
-  // const userName = useSelector((s) => s.user.name)
-  // const usersList = useSelector((s) => s.user.list)
+  const dispatch = useDispatch()
+  const goodsList = useSelector((s) => s.goods)
 
-  // useEffect(() => {
-  //   dispatch(getUsers())
-  // }, [userName])
+  useEffect(() => {
+    dispatch(getGoods())
+  }, [])
 
   return (
     <div>
       <Head title="Main" />
       <Header title="Main" />
       <div className="flex flex-col justify-center items-center h-full">
+        {goodsList.map((it) => {
+          return <div key={it.title}>{it.title}</div>
+        })}
+        {/* {JSON.stringify(cardsList)} */}
         {/* <p className="font-bold text-xl">Hello {userName}</p> */}
         {/* <div>
           <input

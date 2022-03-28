@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
 
-import user from './user'
+import goods from './goods'
 
 const createRootReducer = () => {
   return combineReducers({
-    user
+    goods
   })
 }
 
