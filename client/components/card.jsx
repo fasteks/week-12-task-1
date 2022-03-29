@@ -8,8 +8,8 @@ const Card = (props) => {
       <p className="card__title font-bold">{card.title}</p>
       <p className="card__price">Price: {card.price}</p>
       <span className="currency">Currency: 2</span>
-      {true && <p className="card__product--amount">Quantity in Cart: 4</p>}
-      <button type="button">Add to Cart</button>
+      {true && <p className="card__product--amount">Quantity in Basket: 4</p>}
+      <button type="button">Add to Basket</button>
     </div>
   )
 }

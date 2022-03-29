@@ -1,12 +1,17 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
-const Header = (props) => {
+const Header = () => {
+  const params = useParams()
+  const isUrl = Object.keys(params).length === 0
   return (
     <div className="flex justify-evenly items-center bg-teal-600 p-5 font-semibold text-white">
-      <Link to="/" id="brand-name">
-        {props.title}
-      </Link>
+      {isUrl && <p>Main</p>}
+      {!isUrl && (
+        <Link to="/" id="brand-name">
+          Main
+        </Link>
+      )}
       <div>
         <button type="button" className="mx-1">
           USD

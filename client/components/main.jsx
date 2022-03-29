@@ -8,7 +8,7 @@ const Main = () => {
   return (
     <div>
       <Head title="Main" />
-      <Header title="Main" />
+      <Header />
       <div className="flex flex-wrap justify-between items-center h-full">
         <Cards />
       </div>
