@@ -4,7 +4,7 @@ import Cards from './cards'
 
 const Main = () => {
   return (
-    <div className="flex flex-wrap justify-between items-center h-full">
+    <div className="flex flex-wrap justify-evenly h-full">
       <Cards />
     </div>
   )

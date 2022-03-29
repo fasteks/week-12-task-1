@@ -9,12 +9,11 @@ const Products = () => {
   const isEmpty = 'Your basket is empty!'
   return (
     <div>
-      {isproductList ?
-        isEmpty
-        :
-        productList.map((currentProduct) => (
-          <Product key={currentProduct.id} product={currentProduct} />
-        ))}
+      {isproductList
+        ? isEmpty
+        : productList.map((currentProduct) => (
+            <Product key={currentProduct.id} product={currentProduct} />
+          ))}
     </div>
   )
 }
