@@ -2,12 +2,18 @@ import axios from 'axios'
 
 const GET_GOODS = 'market/goods/GET_GOODS'
 
-const initialState = []
+const initialState = {
+  cards: [],
+  products: []
+}
 
 export default (state = initialState, action = {}) => {
   switch (action.type) {
     case GET_GOODS: {
-      return action.goods
+      return {
+        ...state,
+        cards: action.goods
+      }
     }
     default:
       return state
