@@ -2,6 +2,7 @@ import axios from 'axios'
 
 const GET_CARDS = 'market/goods/GET_CARDS'
 const ADD_TO_BUSKET = 'market/goods/ADD_TO_BUSKET'
+// const REMOVE_FROM_BUSKET = 'market/goods/REMOVE_FROM_BUSKET'
 
 const initialState = {
   cards: [],
@@ -38,3 +39,7 @@ export function getCards() {
 export function addToBasket(product) {
   return { type: ADD_TO_BUSKET, addProduct: product }
 }
+
+// export function removeFromBusket() {
+//   return { type: REMOVE_FROM_BUSKET, }
+// }

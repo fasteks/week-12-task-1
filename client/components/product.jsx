@@ -9,8 +9,11 @@ const Product = (props) => {
       <p className="product__price">Price for one: {product.price}</p>
       <p className="product__amount">Quantity in Basket: 4</p>
       <p className="product__total_price">Total for products: 4</p>
-      <button type="button" className="product__remove p-1 mt-1 rounded-md bg-rose-500 text-white">
-        Delete Product from Basket
+      <button
+        type="button"
+        className="product__remove w-full p-1 mt-1 rounded-md bg-rose-500 text-white"
+      >
+        Delete Product
       </button>
     </div>
   )
