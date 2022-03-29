@@ -34,13 +34,13 @@ const Header = () => {
         </button>
       </div>
       {!isUrl ? (
-        <span id="order-count">Order: </span>
+        <span id="order-count">Order: {0}</span>
       ) : (
         <Link to="/basket">
-          <span id="order-count">Order: </span>
+          <span id="order-count">Order: {0}</span>
         </Link>
       )}
-      <p>Total cost: {}</p>
+      <p>Total cost: {0}</p>
     </div>
   )
 }

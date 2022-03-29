@@ -2,10 +2,15 @@ import React from 'react'
 
 const Basket = () => {
   return (
-    <div className="flex flex-col items-between h-screen">
-      <div className="h-screen">1</div>
-      <p id="total-amount" className="flex justify-center bg-teal-600 p-5 font-semibold text-white">
-        Total:
+    <div className="flex flex-col items-between">
+      <div className="flex h-96 m-5 justify-center items-center font-semibold text-lg text-rose-600 bg-rose-100 border-2 rounded-lg border-rose-600">
+        {'Your basket is empty!' || 1}
+      </div>
+      <p
+        id="total-amount"
+        className="flex self-center justify-center bg-teal-600 py-5 px-10 font-semibold text-white"
+      >
+        Total: {0}
       </p>
     </div>
   )
