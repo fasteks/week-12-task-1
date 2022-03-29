@@ -3,11 +3,12 @@ import { Link, useParams } from 'react-router-dom'
 
 const Header = () => {
   const params = useParams()
-  const isUrl = Object.keys(params).length === 0
+  const isUrl = params[0].length === 0
   return (
     <div className="flex justify-evenly items-center bg-teal-600 p-5 font-semibold text-white">
-      {isUrl && <p>Main</p>}
-      {!isUrl && (
+      {isUrl ? (
+        <p>Main</p>
+      ) : (
         <Link to="/" id="brand-name">
           Main
         </Link>
@@ -32,10 +33,11 @@ const Header = () => {
           Name
         </button>
       </div>
-      {!isUrl && <span id="order-count">Order: {0}</span>}
-      {isUrl && (
+      {!isUrl ? (
+        <span id="order-count">Order: </span>
+      ) : (
         <Link to="/basket">
-          <span id="order-count">Order: {0}</span>
+          <span id="order-count">Order: </span>
         </Link>
       )}
       <p>Total cost: {}</p>

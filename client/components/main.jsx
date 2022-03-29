@@ -1,17 +1,11 @@
 import React from 'react'
 
-import Head from './head'
-import Header from './header'
 import Cards from './cards'
 
 const Main = () => {
   return (
-    <div>
-      <Head title="Main" />
-      <Header />
-      <div className="flex flex-wrap justify-between items-center h-full">
-        <Cards />
-      </div>
+    <div className="flex flex-wrap justify-between items-center h-full">
+      <Cards />
     </div>
   )
 }
