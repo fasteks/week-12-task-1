@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const GET_GOODS = 'market/goods/GET_GOODS'
+const GET_CARDS = 'market/goods/GET_CARDS'
+const ADD_TO_BUSKET = 'market/goods/ADD_TO_BUSKET'
 
 const initialState = {
   cards: [],
@@ -9,10 +10,16 @@ const initialState = {
 
 export default (state = initialState, action = {}) => {
   switch (action.type) {
-    case GET_GOODS: {
+    case GET_CARDS: {
       return {
         ...state,
         cards: action.goods
+      }
+    }
+    case ADD_TO_BUSKET: {
+      return {
+        ...state,
+        products: [...state.products, action.addProduct]
       }
     }
     default:
@@ -20,10 +27,14 @@ export default (state = initialState, action = {}) => {
   }
 }
 
-export function getGoods() {
+export function getCards() {
   return async (dispatch) => {
     await axios('/api/v1/goods').then(({ data }) => {
-      dispatch({ type: GET_GOODS, goods: data })
+      dispatch({ type: GET_CARDS, goods: data })
     })
   }
+}
+
+export function addToBasket(product) {
+  return { type: ADD_TO_BUSKET, addProduct: product }
 }

@@ -8,14 +8,14 @@ import Basket from './basket'
 import Head from './head'
 import Header from './header'
 
-import { getGoods } from '../redux/reducers/goods'
+import { getCards } from '../redux/reducers/goods'
 
 const Home = () => {
   const dispatch = useDispatch()
   const params = useParams()
 
   useEffect(() => {
-    dispatch(getGoods())
+    dispatch(getCards())
   })
 
   return (
