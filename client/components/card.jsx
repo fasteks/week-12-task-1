@@ -9,7 +9,9 @@ const Card = (props) => {
       <p className="card__price">Price: {card.price}</p>
       <span className="currency">Currency: 2</span>
       {true && <p className="card__product--amount">Quantity in Basket: 4</p>}
-      <button type="button">Add to Basket</button>
+      <button type="button" className="p-1 mt-1 rounded-md bg-rose-500 text-white">
+        Add to Basket
+      </button>
     </div>
   )
 }

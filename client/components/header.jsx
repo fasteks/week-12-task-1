@@ -32,9 +32,12 @@ const Header = () => {
           Name
         </button>
       </div>
-      <Link>
-        <span id="order-count">{}</span>
-      </Link>
+      {!isUrl && <span id="order-count">Order: {0}</span>}
+      {isUrl && (
+        <Link to="/basket">
+          <span id="order-count">Order: {0}</span>
+        </Link>
+      )}
       <p>Total cost: {}</p>
     </div>
   )
