@@ -1,11 +1,11 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { addToBasket } from '../redux/reducers/goods'
+import { addToBasket, getSum } from '../redux/reducers/goods'
 
 const Card = (props) => {
-  const dispatch = useDispatch()
   const { card } = props
+  const dispatch = useDispatch()
   const cardsList = useSelector((s) => s.goods.cards)
   const productsList = useSelector((s) => s.goods.products)
   const counter = productsList
@@ -29,6 +29,11 @@ const Card = (props) => {
     })
     return updatedProductsList
   }
+  function calcSum() {
+    const intialState = card.price
+    const calculatedSum = productsList.reduce((acc, rec) => acc + rec.count * rec.price, intialState)
+    return calculatedSum
+  }
   return (
     <div className="card flex flex-col items-center justify-between p-2 m-2 bg-lime-100 border-2 rounded-lg border-lime-600">
       <img className="card__image" src={card.image} alt={card.description} />
@@ -41,6 +46,7 @@ const Card = (props) => {
         className="p-1 mt-1 rounded-md bg-rose-500 text-white"
         onClick={() => {
           dispatch(addToBasket(lookForCard()))
+          dispatch(getSum(calcSum()))
         }}
       >
         Add to Basket

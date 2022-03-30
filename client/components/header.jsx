@@ -5,6 +5,7 @@ import { Link, useParams } from 'react-router-dom'
 const Header = () => {
   const params = useParams()
   const productsList = useSelector((s) => s.goods.products)
+  const totalSum = useSelector((s) => s.goods.sum)
   const countSum =
     productsList.length === 0 ? 0 : productsList.reduce((acc, rec) => acc + rec.count, 0)
   const isUrl = params[0].length === 0
@@ -44,7 +45,7 @@ const Header = () => {
           <span id="order-count">Order: {countSum}</span>
         </Link>
       )}
-      <p>Total cost: {0}</p>
+      <p>Total cost: {totalSum}</p>
     </div>
   )
 }

@@ -5,6 +5,7 @@ import { removeFromBusket } from '../redux/reducers/goods'
 const Product = (props) => {
   const dispatch = useDispatch()
   const { product } = props
+  const sumForProduct = +product.count * +product.price
   const productList = useSelector((s) => s.goods.products)
   const removeProductArr =
     product.count === 1
@@ -22,8 +23,7 @@ const Product = (props) => {
       <p className="product__title text-center font-bold">{product.title}</p>
       <p className="product__price">Price for one: {product.price}</p>
       <p className="product__amount">Quantity in Basket: {product.count}</p>
-      <p className="product__total_price">Total for products: 4</p>
-      {/* {JSON.stringify(removeProductArr)} */}
+      <p className="product__total_price">Total for products: {sumForProduct}</p>
       <button
         type="button"
         className="product__remove w-full p-1 mt-1 rounded-md bg-rose-500 text-white"
