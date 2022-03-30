@@ -8,6 +8,10 @@ const Card = (props) => {
   const { card } = props
   const cardsList = useSelector((s) => s.goods.cards)
   const productsList = useSelector((s) => s.goods.products)
+  const counter = productsList
+    .filter((it) => it.id === card.id)
+    .map((el) => el.count)
+    .join()
   const lookForCard = () => {
     const isCardInBasket = productsList.find((it) => it.id === card.id)
     if (!isCardInBasket) {
@@ -31,7 +35,7 @@ const Card = (props) => {
       <p className="card__title text-center font-bold">{card.title}</p>
       <p className="card__price">Price: {card.price}</p>
       <span className="currency">Currency: 2</span>
-      {true && <p className="card__product--amount">Quantity in Basket: 4</p>}
+      {counter && <p className="card__product--amount">Quantity in Basket: {counter}</p>}
       <button
         type="button"
         className="p-1 mt-1 rounded-md bg-rose-500 text-white"
