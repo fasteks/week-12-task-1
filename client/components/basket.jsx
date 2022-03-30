@@ -8,7 +8,7 @@ const Basket = () => {
       <Products />
       <p
         id="total-amount"
-        className="flex self-center justify-center bg-teal-600 py-5 px-10 font-semibold text-white"
+        className="flex self-center justify-center py-5 px-10 font-semibold text-white bg-teal-600"
       >
         Total: {0}
       </p>

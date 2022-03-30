@@ -1,8 +1,10 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 
 const Header = () => {
   const params = useParams()
+  const productsInBasket = useSelector((s) => s.goods.products.length)
   const isUrl = params[0].length === 0
   return (
     <div className="flex justify-evenly items-center bg-teal-600 p-5 font-semibold text-white">
@@ -34,10 +36,10 @@ const Header = () => {
         </button>
       </div>
       {!isUrl ? (
-        <span id="order-count">Order: {0}</span>
+        <span id="order-count">Order: {productsInBasket}</span>
       ) : (
         <Link to="/basket">
-          <span id="order-count">Order: {0}</span>
+          <span id="order-count">Order: {productsInBasket}</span>
         </Link>
       )}
       <p>Total cost: {0}</p>
