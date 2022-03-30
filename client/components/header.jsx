@@ -4,7 +4,9 @@ import { Link, useParams } from 'react-router-dom'
 
 const Header = () => {
   const params = useParams()
-  const productsInBasket = useSelector((s) => s.goods.products.length)
+  const productsList = useSelector((s) => s.goods.products)
+  const countSum =
+    productsList.length === 0 ? 0 : productsList.reduce((acc, rec) => acc + rec.count, 0)
   const isUrl = params[0].length === 0
   return (
     <div className="flex justify-evenly items-center bg-teal-600 p-5 font-semibold text-white">
@@ -36,10 +38,10 @@ const Header = () => {
         </button>
       </div>
       {!isUrl ? (
-        <span id="order-count">Order: {productsInBasket}</span>
+        <span id="order-count">Order: {countSum}</span>
       ) : (
         <Link to="/basket">
-          <span id="order-count">Order: {productsInBasket}</span>
+          <span id="order-count">Order: {countSum}</span>
         </Link>
       )}
       <p>Total cost: {0}</p>

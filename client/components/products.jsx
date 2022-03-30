@@ -12,7 +12,7 @@ const Products = () => {
       {isproductList
         ? isEmpty
         : productList.map((currentProduct, index) => (
-          <Product key={index} product={currentProduct} id={index} />
+            <Product key={index} product={currentProduct} id={index} />
           ))}
     </div>
   )

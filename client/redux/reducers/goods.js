@@ -20,7 +20,7 @@ export default (state = initialState, action = {}) => {
     case ADD_TO_BUSKET: {
       return {
         ...state,
-        products: [...state.products, action.addProduct]
+        products: action.addProduct
       }
     }
     case REMOVE_FROM_BUSKET: {
