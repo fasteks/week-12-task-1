@@ -11,8 +11,8 @@ const Products = () => {
     <div className="flex flex-wrap justify-evenly font-semibold text-lg text-rose-600 bg-blue-100">
       {isproductList
         ? isEmpty
-        : productList.map((currentProduct) => (
-            <Product key={currentProduct.id} product={currentProduct} />
+        : productList.map((currentProduct, index) => (
+          <Product key={index} product={currentProduct} id={index} />
           ))}
     </div>
   )

@@ -1,7 +1,12 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { removeFromBusket } from '../redux/reducers/goods'
 
 const Product = (props) => {
-  const { product } = props
+  const dispatch = useDispatch()
+  const { id, product } = props
+  const productList = useSelector((s) => s.goods.products)
+  const filteredList = productList.filter((it, index) => index !== id)
   return (
     <div className="product flex flex-col items-center justify-between p-2 m-2 bg-lime-100 border-2 rounded-lg border-lime-600 w-1/6 h-96">
       <img className="product__image" src={product.image} alt={product.description} />
@@ -12,6 +17,9 @@ const Product = (props) => {
       <button
         type="button"
         className="product__remove w-full p-1 mt-1 rounded-md bg-rose-500 text-white"
+        onClick={() => {
+          dispatch(removeFromBusket(filteredList))
+        }}
       >
         Delete Product
       </button>
