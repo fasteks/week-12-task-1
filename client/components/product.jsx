@@ -8,7 +8,7 @@ const Product = (props) => {
   const productList = useSelector((s) => s.goods.products)
   const filteredList = productList.filter((it, index) => index !== id)
   return (
-    <div className="product flex flex-col items-center justify-between p-2 m-2 bg-lime-100 border-2 rounded-lg border-lime-600 w-1/6 h-96">
+    <div className="product flex flex-col items-center justify-between p-2 m-2 bg-lime-100 border-2 rounded-lg border-lime-600">
       <img className="product__image" src={product.image} alt={product.description} />
       <p className="product__title text-center font-bold">{product.title}</p>
       <p className="product__price">Price for one: {product.price}</p>

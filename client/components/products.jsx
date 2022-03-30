@@ -8,7 +8,7 @@ const Products = () => {
   const isproductList = productList.length === 0
   const isEmpty = 'Your basket is empty!'
   return (
-    <div className="flex flex-wrap justify-evenly font-semibold text-lg text-rose-600 bg-blue-100">
+    <div className="flex flex-wrap justify-center p-5 font-semibold text-lg text-rose-800">
       {isproductList
         ? isEmpty
         : productList.map((currentProduct, index) => (

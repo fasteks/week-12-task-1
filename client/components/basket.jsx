@@ -4,7 +4,7 @@ import Products from './products'
 
 const Basket = () => {
   return (
-    <>
+    <div className="flex flex-col items-center h-screen bg-blue-200">
       <Products />
       <p
         id="total-amount"
@@ -12,7 +12,7 @@ const Basket = () => {
       >
         Total: {0}
       </p>
-    </>
+    </div>
   )
 }
 
