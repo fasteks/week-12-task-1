@@ -26,7 +26,7 @@ export default (state = initialState, action = {}) => {
     case REMOVE_FROM_BUSKET: {
       return {
         ...state,
-        products: action.listWithoutProduct
+        products: action.removeProduct
       }
     }
     default:
@@ -47,5 +47,5 @@ export function addToBasket(product) {
 }
 
 export function removeFromBusket(list) {
-  return { type: REMOVE_FROM_BUSKET, listWithoutProduct: list }
+  return { type: REMOVE_FROM_BUSKET, removeProduct: list }
 }
