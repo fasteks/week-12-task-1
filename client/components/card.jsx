@@ -29,9 +29,12 @@ const Card = (props) => {
     })
     return updatedProductsList
   }
-  function calcSum() {
+  const calcSum = () => {
     const intialState = card.price
-    const calculatedSum = productsList.reduce((acc, rec) => acc + rec.count * rec.price, intialState)
+    const calculatedSum = productsList.reduce(
+      (acc, rec) => acc + rec.count * rec.price,
+      intialState
+    )
     return calculatedSum
   }
   return (
