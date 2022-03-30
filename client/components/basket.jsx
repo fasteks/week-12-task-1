@@ -4,7 +4,10 @@ import { useSelector } from 'react-redux'
 import Products from './products'
 
 const Basket = () => {
-  const totalSum = useSelector((s) => s.goods.sum)
+  const getCurrency = useSelector((s) => s.goods.currency)
+  const getRates = useSelector((s) => s.goods.rates)
+  let totalSum = useSelector((s) => s.goods.sum) * getRates[getCurrency]
+  totalSum = totalSum.toFixed(2)
   return (
     <div className="flex flex-col items-center h-screen bg-blue-200">
       <Products />

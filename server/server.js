@@ -56,10 +56,10 @@ server.get('/api/v1/goods', async (req, res) => {
   res.json(goods)
 })
 
-// server.get('/api/v1/users/:name', (req, res) => {
-//   const { name } = req.params
-//   res.json({ name })
-// })
+server.get('/api/v1/rates', async (req, res) => {
+  const { data } = await axios('https://api.exchangerate.host/latest?base=USD&symbols=USD,EUR,CAD')
+  res.json(data.rates)
+})
 
 server.use('/api/', (req, res) => {
   res.status(404)

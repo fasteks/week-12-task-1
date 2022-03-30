@@ -8,7 +8,7 @@ import Basket from './basket'
 import Head from './head'
 import Header from './header'
 
-import { getCards } from '../redux/reducers/goods'
+import { getCards, getRates } from '../redux/reducers/goods'
 
 const Home = () => {
   const dispatch = useDispatch()
@@ -16,6 +16,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getCards())
+    dispatch(getRates())
   })
 
   return (
