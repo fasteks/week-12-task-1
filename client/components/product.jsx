@@ -1,13 +1,14 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { removeFromBusket, getSum } from '../redux/reducers/goods'
+import { removeFromBusket } from '../redux/reducers/goods'
+// import { removeFromBusket, getSum } from '../redux/reducers/goods'
 
 const Product = (props) => {
   const dispatch = useDispatch()
   const { product } = props
   const sumForProduct = +product.count * +product.price
   const productList = useSelector((s) => s.goods.products)
-  const totalSum = useSelector((s) => s.goods.sum)
+  // const totalSum = useSelector((s) => s.goods.sum)
   const removeProductArr =
     product.count === 1
       ? productList.filter((el) => el.count !== 1)
@@ -18,10 +19,10 @@ const Product = (props) => {
           }
           return obj
         })
-  const decrementSum = () => {
-    const calculatedSum = totalSum - product.price
-    return calculatedSum
-  }
+  // const decrementSum = () => {
+  //   const calculatedSum = totalSum - product.price
+  //   return calculatedSum
+  // }
   return (
     <div className="product flex flex-col items-center justify-between p-2 m-2 bg-lime-100 border-2 rounded-lg border-lime-600">
       <img className="product__image" src={product.image} alt={product.description} />
@@ -34,7 +35,7 @@ const Product = (props) => {
         className="product__remove w-full p-1 mt-1 rounded-md bg-rose-500 text-white"
         onClick={() => {
           dispatch(removeFromBusket(removeProductArr))
-          dispatch(getSum(decrementSum()))
+          // dispatch(getSum(decrementSum()))
         }}
       >
         Delete Product

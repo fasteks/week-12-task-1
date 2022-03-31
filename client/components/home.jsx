@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Switch, Route, useParams } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Main from './main'
 import Basket from './basket'
@@ -8,15 +8,20 @@ import Basket from './basket'
 import Head from './head'
 import Header from './header'
 
-import { getCards } from '../redux/reducers/goods'
+import { getCards, getRates } from '../redux/reducers/goods'
 
 const Home = () => {
   const dispatch = useDispatch()
   const params = useParams()
+  const { currency } = useSelector((s) => s.goods)
+
+  useEffect(() => {
+    dispatch(getRates())
+  }, [])
 
   useEffect(() => {
     dispatch(getCards())
-  })
+  }, [currency])
 
   return (
     <>
