@@ -13,7 +13,6 @@ import { getCards, getRates } from '../redux/reducers/goods'
 const Home = () => {
   const dispatch = useDispatch()
   const params = useParams()
-  // const { currency } = useSelector((s) => s.goods)
 
   useEffect(() => {
     dispatch(getRates())
@@ -21,10 +20,6 @@ const Home = () => {
       dispatch(getCards())
     }, 150)
   })
-
-  // useEffect(() => {
-  //   dispatch(getCards())
-  // }, [currency])
 
   return (
     <>
