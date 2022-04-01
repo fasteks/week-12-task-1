@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 
-import { changeCurrency } from '../redux/reducers/goods'
+import { changeCurrency, sortCards, sortGoods } from '../redux/reducers/goods'
 
 const Header = () => {
   const params = useParams()
@@ -51,11 +51,27 @@ const Header = () => {
       </div>
       <div className="flex">
         Sort By:
-        <button type="button" id="sort-price" className="mx-1 ml-2">
+        <button
+          type="button"
+          id="sort-price"
+          className="mx-1 ml-2"
+          onClick={() => {
+            dispatch(sortGoods('price'))
+            dispatch(sortCards('price'))
+          }}
+        >
           Price
         </button>
         |
-        <button type="button" id="sort-name" className="mx-1">
+        <button
+          type="button"
+          id="sort-name"
+          className="mx-1"
+          onClick={() => {
+            dispatch(sortGoods('name'))
+            dispatch(sortCards('name'))
+          }}
+        >
           Name
         </button>
       </div>

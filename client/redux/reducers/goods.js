@@ -5,6 +5,8 @@ const ADD_TO_BUSKET = 'market/goods/ADD_TO_BUSKET'
 const REMOVE_FROM_BUSKET = 'market/goods/REMOVE_FROM_BUSKET'
 const GET_RATES = 'market/goods/GET_RATES'
 const CHANGE_CURRENCY = 'market/goods/CHANGE_CURRENCY'
+const SORT_GOODS = 'market/goods/SORT_GOODS'
+const SORT_CARDS = 'market/goods/SORT_CARDS'
 const USD_CURRENCY = 'USD'
 const EUR_CURRENCY = 'EUR'
 const CAD_CURRENCY = 'CAD'
@@ -59,6 +61,18 @@ export default (state = initialState, action = {}) => {
         products: action.removeProduct,
         sum: action.updatedSum,
         order: action.decOrder
+      }
+    }
+    case SORT_GOODS: {
+      return {
+        ...state,
+        products: action.sortedGoods
+      }
+    }
+    case SORT_CARDS: {
+      return {
+        ...state,
+        cards: action.sortedCards
       }
     }
     default:
@@ -332,5 +346,55 @@ export function changeCurrency(curr) {
       currencySum: calcSum(),
       curren: curr
     })
+  }
+}
+
+export function sortCards(by) {
+  return (dispatch, getStore) => {
+    const store = getStore()
+    const { cards } = store.goods
+    if (by === 'name') {
+      const cardsSortedByName = cards.sort((a, b) => {
+        return a.title.localeCompare(b.title)
+      })
+      dispatch({
+        type: SORT_CARDS,
+        sortedCards: cardsSortedByName
+      })
+    }
+    if (by === 'price') {
+      const cardsSortedByPrice = cards.sort((a, b) => {
+        return b.price[USD_CURRENCY] - a.price[USD_CURRENCY]
+      })
+      dispatch({
+        type: SORT_CARDS,
+        sortedCards: cardsSortedByPrice
+      })
+    }
+  }
+}
+
+export function sortGoods(by) {
+  return (dispatch, getStore) => {
+    const store = getStore()
+    const { products } = store.goods
+    if (products.length > 0 && by === 'name') {
+      const productsSortedByName = products.sort((a, b) => {
+        return a.title.localeCompare(b.title)
+      })
+      dispatch({
+        type: SORT_GOODS,
+        sortedGoods: productsSortedByName
+      })
+    }
+    if (products.length > 0 && by === 'price') {
+      const productsSortedByPrice = products.sort((a, b) => {
+        return b.price[USD_CURRENCY] - a.price[USD_CURRENCY]
+      })
+      dispatch({
+        type: SORT_GOODS,
+        sortedGoods: productsSortedByPrice
+      })
+    }
   }
 }
