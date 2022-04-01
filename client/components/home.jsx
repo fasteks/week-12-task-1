@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Switch, Route, useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import Main from './main'
 import Basket from './basket'
@@ -13,15 +13,18 @@ import { getCards, getRates } from '../redux/reducers/goods'
 const Home = () => {
   const dispatch = useDispatch()
   const params = useParams()
-  const { currency } = useSelector((s) => s.goods)
+  // const { currency } = useSelector((s) => s.goods)
 
   useEffect(() => {
     dispatch(getRates())
-  }, [])
+    setTimeout(() => {
+      dispatch(getCards())
+    }, 150)
+  })
 
-  useEffect(() => {
-    dispatch(getCards())
-  }, [currency])
+  // useEffect(() => {
+  //   dispatch(getCards())
+  // }, [currency])
 
   return (
     <>

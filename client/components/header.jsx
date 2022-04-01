@@ -2,20 +2,15 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 
-import { setCurrency } from '../redux/reducers/goods'
+import { changeCurrency } from '../redux/reducers/goods'
 
 const Header = () => {
   const params = useParams()
   const dispatch = useDispatch()
-  const productsList = useSelector((s) => s.goods.products)
-  // const getCurrency = useSelector((s) => s.goods.currency)
-  // const getRates = useSelector((s) => s.goods.rates)
-  // let totalSum = useSelector((s) => s.goods.sum) * getRates[getCurrency]
-  const totalSum = useSelector((s) => s.goods.sum)
-  const totalSumFixed = totalSum.toFixed(2)
+  const { products, currency, sum } = useSelector((s) => s.goods)
   const isUrl = params[0].length === 0
   const orderCount =
-    productsList.length === 0 ? 0 : productsList.reduce((acc, rec) => acc + rec.count, 0)
+    products.length === 0 ? 0 : products.reduce((acc, rec) => acc + rec.count, 0)
   return (
     <div className="flex justify-evenly items-center bg-teal-600 p-5 font-semibold text-white">
       {isUrl ? (
@@ -30,7 +25,7 @@ const Header = () => {
           type="button"
           className="mx-1"
           onClick={() => {
-            dispatch(setCurrency('USD'))
+            dispatch(changeCurrency('USD'))
           }}
         >
           USD
@@ -39,7 +34,7 @@ const Header = () => {
           type="button"
           className="mx-1"
           onClick={() => {
-            dispatch(setCurrency('EUR'))
+            dispatch(changeCurrency('EUR'))
           }}
         >
           EUR
@@ -48,7 +43,7 @@ const Header = () => {
           type="button"
           className="mx-1"
           onClick={() => {
-            dispatch(setCurrency('CAD'))
+            dispatch(changeCurrency('CAD'))
           }}
         >
           CAD
@@ -70,7 +65,7 @@ const Header = () => {
           <span id="order-count">Order: {orderCount}</span>
         </Link>
       )}
-      <p>Total cost: {totalSumFixed}</p>
+      <p>Total cost: {sum[currency]}</p>
     </div>
   )
 }
