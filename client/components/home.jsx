@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Switch, Route, useParams } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 
 import Main from './main'
 import Basket from './basket'
@@ -8,18 +7,8 @@ import Basket from './basket'
 import Head from './head'
 import Header from './header'
 
-import { getCards, getRates } from '../redux/reducers/goods'
-
 const Home = () => {
-  const dispatch = useDispatch()
   const params = useParams()
-
-  useEffect(() => {
-    dispatch(getRates())
-    setTimeout(() => {
-      dispatch(getCards())
-    }, 150)
-  })
 
   return (
     <>
