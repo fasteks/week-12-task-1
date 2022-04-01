@@ -29,7 +29,7 @@ export default (state = initialState, action = {}) => {
     case GET_RATES: {
       return {
         ...state,
-        rates: action.getRate
+        rates: action.getRates
       }
     }
     case GET_CARDS: {
@@ -270,10 +270,21 @@ export function removeFromBusket(product) {
   }
 }
 
+// export function getRates() {
+//   return async (dispatch) => {
+//     await axios('/api/v1/rates').then(({ data }) => {
+//       dispatch({ type: GET_RATES, getRate: data })
+//     })
+//   }
+// }
+
 export function getRates() {
   return async (dispatch) => {
     await axios('/api/v1/rates').then(({ data }) => {
-      dispatch({ type: GET_RATES, getRate: data })
+      const fixedRates = Object.keys(data).reduce((acc, rec) => {
+        return { ...acc, [rec]: (+data[rec]).toFixed(2) }
+      }, {})
+      dispatch({ type: GET_RATES, getRates: fixedRates })
     })
   }
 }
@@ -281,28 +292,31 @@ export function getRates() {
 export function changeCurrency(curr) {
   return (dispatch, getState) => {
     const state = getState()
-    const { products } = state.goods
+    const { products, rates } = state.goods
 
     const calcSum = () => {
       const calcTotalSum = products.map((it) => {
-        const totalPriceUSD = it.price[USD_CURRENCY] * it.count
-        const totalPriceEUR = it.price[EUR_CURRENCY] * it.count
-        const totalPriceCAD = it.price[CAD_CURRENCY] * it.count
+        const totalPriceUSD = it.price[USD_CURRENCY] * +rates[USD_CURRENCY] * it.count
+        const totalPriceEUR = it.price[USD_CURRENCY] * +rates[EUR_CURRENCY] * it.count
+        const totalPriceCAD = it.price[USD_CURRENCY] * +rates[CAD_CURRENCY] * it.count
+        // const totalPriceUSD = it.price[USD_CURRENCY] * it.count
+        // const totalPriceEUR = it.price[EUR_CURRENCY] * it.count
+        // const totalPriceCAD = it.price[CAD_CURRENCY] * it.count
+        //   return {
+        //     [USD_CURRENCY]: totalPriceUSD,
+        //     [EUR_CURRENCY]: totalPriceEUR,
+        //     [CAD_CURRENCY]: totalPriceCAD
+        //   }
+        // })
+        const totalPriceUSDFixed = totalPriceUSD.toFixed(2)
+        const totalPriceEURFixed = totalPriceEUR.toFixed(2)
+        const totalPriceCADFixed = totalPriceCAD.toFixed(2)
         return {
-          [USD_CURRENCY]: totalPriceUSD,
-          [EUR_CURRENCY]: totalPriceEUR,
-          [CAD_CURRENCY]: totalPriceCAD
+          [USD_CURRENCY]: totalPriceUSDFixed,
+          [EUR_CURRENCY]: totalPriceEURFixed,
+          [CAD_CURRENCY]: totalPriceCADFixed
         }
       })
-      //   const totalPriceUSDFixed = totalPriceUSD.toFixed(2)
-      //   const totalPriceEURFixed = totalPriceEUR.toFixed(2)
-      //   const totalPriceCADFixed = totalPriceCAD.toFixed(2)
-      //   return {
-      //     [USD_CURRENCY]: totalPriceUSDFixed,
-      //     [EUR_CURRENCY]: totalPriceEURFixed,
-      //     [CAD_CURRENCY]: totalPriceCADFixed
-      //   }
-      // })
       const totalSumUsd = calcTotalSum.reduce((acc, rec) => {
         return acc + +rec[USD_CURRENCY]
       }, 0)
