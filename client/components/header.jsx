@@ -7,10 +7,8 @@ import { changeCurrency } from '../redux/reducers/goods'
 const Header = () => {
   const params = useParams()
   const dispatch = useDispatch()
-  const { products, currency, sum } = useSelector((s) => s.goods)
+  const { currency, sum, order } = useSelector((s) => s.goods)
   const isUrl = params[0].length === 0
-  const orderCount =
-    products.length === 0 ? 0 : products.reduce((acc, rec) => acc + rec.count, 0)
   return (
     <div className="flex justify-evenly items-center bg-teal-600 p-5 font-semibold text-white">
       {isUrl ? (
@@ -59,10 +57,10 @@ const Header = () => {
         </button>
       </div>
       {!isUrl ? (
-        <span id="order-count">Order: {orderCount}</span>
+        <span id="order-count">Order: {order}</span>
       ) : (
         <Link to="/basket">
-          <span id="order-count">Order: {orderCount}</span>
+          <span id="order-count">Order: {order}</span>
         </Link>
       )}
       <p>Total cost: {sum[currency]}</p>

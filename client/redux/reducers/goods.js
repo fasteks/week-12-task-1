@@ -20,7 +20,8 @@ const initialState = {
   rates: {
     [USD_CURRENCY]: 1
   },
-  currency: USD_CURRENCY
+  currency: USD_CURRENCY,
+  order: 0
 }
 
 export default (state = initialState, action = {}) => {
@@ -41,7 +42,8 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         products: action.addProduct,
-        sum: action.updatedSum
+        sum: action.updatedSum,
+        order: action.addOrder
       }
     }
     case CHANGE_CURRENCY: {
@@ -98,8 +100,8 @@ export function getCards() {
 export function addToBasket(card) {
   return (dispatch, getState) => {
     const state = getState()
-    const { cards, products, rates, currency } = state.goods
-
+    const { cards, products, rates, currency, order } = state.goods
+    const newOrder = order + 1
     const lookForCard = () => {
       const isCardInBasket = products.find((it) => it.id === card.id)
 
@@ -180,7 +182,12 @@ export function addToBasket(card) {
       }
     }
 
-    dispatch({ type: ADD_TO_BUSKET, addProduct: lookForCard(), updatedSum: calcSum() })
+    dispatch({
+      type: ADD_TO_BUSKET,
+      addProduct: lookForCard(),
+      updatedSum: calcSum(),
+      addOrder: newOrder
+    })
   }
 }
 
