@@ -6,9 +6,8 @@ import { addToBasket } from '../redux/reducers/goods'
 const Card = (props) => {
   const { card } = props
   const dispatch = useDispatch()
-  const productsList = useSelector((s) => s.goods.products)
-  const { currency } = useSelector((s) => s.goods)
-  const counter = productsList
+  const { products, currency } = useSelector((s) => s.goods)
+  const counter = products
     .filter((it) => it.id === card.id)
     .map((el) => el.count)
     .join()

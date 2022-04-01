@@ -28,6 +28,7 @@ const Header = () => {
         >
           USD
         </button>
+        |
         <button
           type="button"
           className="mx-1"
@@ -37,6 +38,7 @@ const Header = () => {
         >
           EUR
         </button>
+        |
         <button
           type="button"
           className="mx-1"
@@ -52,6 +54,7 @@ const Header = () => {
         <button type="button" id="sort-price" className="mx-1 ml-2">
           Price
         </button>
+        |
         <button type="button" id="sort-name" className="mx-1">
           Name
         </button>

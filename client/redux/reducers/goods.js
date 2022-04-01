@@ -270,14 +270,6 @@ export function removeFromBusket(product) {
   }
 }
 
-// export function getRates() {
-//   return async (dispatch) => {
-//     await axios('/api/v1/rates').then(({ data }) => {
-//       dispatch({ type: GET_RATES, getRate: data })
-//     })
-//   }
-// }
-
 export function getRates() {
   return async (dispatch) => {
     await axios('/api/v1/rates').then(({ data }) => {
