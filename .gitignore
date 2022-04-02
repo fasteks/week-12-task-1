@@ -67,6 +67,4 @@ dist
 yarn-error.log
 *.csv
 
-goods.json
-ratesData.json
 logs.json

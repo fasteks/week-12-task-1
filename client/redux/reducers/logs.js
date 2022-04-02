@@ -7,6 +7,14 @@ const initialState = {
   logsList: []
 }
 
+// 1. transfer logs to middleware
+// https://redux.js.org/tutorials/fundamentals/part-4-store#middleware
+// 2. transfer data sorting to server
+// 3. refactoring of transition data from using useState to transfer in props
+// from parent to children components in case it just render data
+//
+//
+
 export default (state = initialState, action = {}) => {
   switch (action.type) {
     case POST_LOGS: {
