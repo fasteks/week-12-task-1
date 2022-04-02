@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { currencyLogs, getLogs } from './logs'
+import { addToBasketLog, currencyLog, getLogs } from './logs'
 
 const GET_CARDS = 'market/goods/GET_CARDS'
 const ADD_TO_BUSKET = 'market/goods/ADD_TO_BUSKET'
@@ -221,7 +221,7 @@ export function addToBasket(card) {
       //   [CAD_CURRENCY]: +totalSumCad
       // }
     }
-
+    dispatch(addToBasketLog(card.title))
     dispatch({
       type: ADD_TO_BUSKET,
       addProduct: lookForCard(),
@@ -342,7 +342,7 @@ export function changeCurrency(curr) {
         [CAD_CURRENCY]: totalSumCadFixed
       }
     }
-    dispatch(currencyLogs(currency, curr))
+    dispatch(currencyLog(currency, curr))
     dispatch({
       type: CHANGE_CURRENCY,
       currencySum: calcSum(),

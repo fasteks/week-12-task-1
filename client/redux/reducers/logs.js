@@ -12,7 +12,7 @@ export default (state = initialState, action = {}) => {
     case POST_LOGS: {
       return {
         ...state,
-        logsList: [...state.logsList, ...action.payload]
+        logsList: action.payload
       }
     }
     case GET_LOGS: {
@@ -37,7 +37,7 @@ export function getLogs() {
   }
 }
 
-export function currencyLogs(currency1, currency2) {
+export function currencyLog(currency1, currency2) {
   return async (dispatch) => {
     const formattedDate = () => {
       const date = new Date().toISOString()
@@ -48,6 +48,24 @@ export function currencyLogs(currency1, currency2) {
       url: '/api/v1/logs',
       data: {
         action: `${formattedDate()} - change currency from ${currency1} to ${currency2}`
+      }
+    }).then(({ data }) => {
+      dispatch({ type: POST_LOGS, payload: data })
+    })
+  }
+}
+
+export function addToBasketLog(title) {
+  return async (dispatch) => {
+    const formattedDate = () => {
+      const date = new Date().toISOString()
+      return `${date.slice(0, 10)} ${date.slice(11, 19)}`
+    }
+    await axios({
+      method: 'post',
+      url: '/api/v1/logs',
+      data: {
+        action: `${formattedDate()} - add ${title} to the backet`
       }
     }).then(({ data }) => {
       dispatch({ type: POST_LOGS, payload: data })
