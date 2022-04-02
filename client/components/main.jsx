@@ -16,7 +16,7 @@ const Main = () => {
     if (cards.length === 0) {
       setTimeout(() => {
         dispatch(getCards())
-      }, 300)
+      }, 500)
     }
   }, [])
 
