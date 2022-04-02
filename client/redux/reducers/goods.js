@@ -301,54 +301,55 @@ export function changeCurrency(curr) {
   return (dispatch, getState) => {
     const state = getState()
     const { products, rates, currency } = state.goods
-
-    const calcSum = () => {
-      const calcTotalSum = products.map((it) => {
-        const totalPriceUSD = it.price[USD_CURRENCY] * +rates[USD_CURRENCY] * it.count
-        const totalPriceEUR = it.price[USD_CURRENCY] * +rates[EUR_CURRENCY] * it.count
-        const totalPriceCAD = it.price[USD_CURRENCY] * +rates[CAD_CURRENCY] * it.count
-        // const totalPriceUSD = it.price[USD_CURRENCY] * it.count
-        // const totalPriceEUR = it.price[EUR_CURRENCY] * it.count
-        // const totalPriceCAD = it.price[CAD_CURRENCY] * it.count
-        //   return {
-        //     [USD_CURRENCY]: totalPriceUSD,
-        //     [EUR_CURRENCY]: totalPriceEUR,
-        //     [CAD_CURRENCY]: totalPriceCAD
-        //   }
-        // })
-        const totalPriceUSDFixed = totalPriceUSD.toFixed(2)
-        const totalPriceEURFixed = totalPriceEUR.toFixed(2)
-        const totalPriceCADFixed = totalPriceCAD.toFixed(2)
+    if (curr !== currency) {
+      const calcSum = () => {
+        const calcTotalSum = products.map((it) => {
+          const totalPriceUSD = it.price[USD_CURRENCY] * +rates[USD_CURRENCY] * it.count
+          const totalPriceEUR = it.price[USD_CURRENCY] * +rates[EUR_CURRENCY] * it.count
+          const totalPriceCAD = it.price[USD_CURRENCY] * +rates[CAD_CURRENCY] * it.count
+          // const totalPriceUSD = it.price[USD_CURRENCY] * it.count
+          // const totalPriceEUR = it.price[EUR_CURRENCY] * it.count
+          // const totalPriceCAD = it.price[CAD_CURRENCY] * it.count
+          //   return {
+          //     [USD_CURRENCY]: totalPriceUSD,
+          //     [EUR_CURRENCY]: totalPriceEUR,
+          //     [CAD_CURRENCY]: totalPriceCAD
+          //   }
+          // })
+          const totalPriceUSDFixed = totalPriceUSD.toFixed(2)
+          const totalPriceEURFixed = totalPriceEUR.toFixed(2)
+          const totalPriceCADFixed = totalPriceCAD.toFixed(2)
+          return {
+            [USD_CURRENCY]: totalPriceUSDFixed,
+            [EUR_CURRENCY]: totalPriceEURFixed,
+            [CAD_CURRENCY]: totalPriceCADFixed
+          }
+        })
+        const totalSumUsd = calcTotalSum.reduce((acc, rec) => {
+          return acc + +rec[USD_CURRENCY]
+        }, 0)
+        const totalSumEur = calcTotalSum.reduce((acc, rec) => {
+          return acc + +rec[EUR_CURRENCY]
+        }, 0)
+        const totalSumCad = calcTotalSum.reduce((acc, rec) => {
+          return acc + +rec[CAD_CURRENCY]
+        }, 0)
+        const totalSumUsdFixed = totalSumUsd.toFixed(2)
+        const totalSumEurFixed = totalSumEur.toFixed(2)
+        const totalSumCadFixed = totalSumCad.toFixed(2)
         return {
-          [USD_CURRENCY]: totalPriceUSDFixed,
-          [EUR_CURRENCY]: totalPriceEURFixed,
-          [CAD_CURRENCY]: totalPriceCADFixed
+          [USD_CURRENCY]: totalSumUsdFixed,
+          [EUR_CURRENCY]: totalSumEurFixed,
+          [CAD_CURRENCY]: totalSumCadFixed
         }
-      })
-      const totalSumUsd = calcTotalSum.reduce((acc, rec) => {
-        return acc + +rec[USD_CURRENCY]
-      }, 0)
-      const totalSumEur = calcTotalSum.reduce((acc, rec) => {
-        return acc + +rec[EUR_CURRENCY]
-      }, 0)
-      const totalSumCad = calcTotalSum.reduce((acc, rec) => {
-        return acc + +rec[CAD_CURRENCY]
-      }, 0)
-      const totalSumUsdFixed = totalSumUsd.toFixed(2)
-      const totalSumEurFixed = totalSumEur.toFixed(2)
-      const totalSumCadFixed = totalSumCad.toFixed(2)
-      return {
-        [USD_CURRENCY]: totalSumUsdFixed,
-        [EUR_CURRENCY]: totalSumEurFixed,
-        [CAD_CURRENCY]: totalSumCadFixed
       }
+      dispatch(currencyLog(currency, curr))
+      dispatch({
+        type: CHANGE_CURRENCY,
+        currencySum: calcSum(),
+        curren: curr
+      })
     }
-    dispatch(currencyLog(currency, curr))
-    dispatch({
-      type: CHANGE_CURRENCY,
-      currencySum: calcSum(),
-      curren: curr
-    })
   }
 }
 

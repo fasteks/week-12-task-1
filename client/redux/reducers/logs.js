@@ -9,11 +9,22 @@ const initialState = {
 
 // 1. transfer logs to middleware
 // https://redux.js.org/tutorials/fundamentals/part-4-store#middleware
+// like this --->
+//   function func() {
+//   return ({ dispatch, getState }) =>
+//     (next) =>
+//     (action) => {
+//       // if (typeof action === 'function') {
+//       //  return action(dispatch, getState);
+//       //}
+//       // пиши шо хочешь сделать
+//       return next(action)
+//     }
+// }
 // 2. transfer data sorting to server
 // 3. refactoring of transition data from using useState to transfer in props
 // from parent to children components in case it just render data
-//
-//
+// 5. refactoring into table structure view
 
 export default (state = initialState, action = {}) => {
   switch (action.type) {
