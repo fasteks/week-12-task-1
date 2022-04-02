@@ -37,16 +37,17 @@ const middleware = [
 middleware.forEach((it) => server.use(it))
 
 const getGoods = () => {
-  return readFile(`${__dirname}/data/goods.json`, 'utf-8').then((text) => {
-    return JSON.parse(text)
-  })
-  // .catch(async () => {
-  //   const { data: goodsData } = await axios(
-  //     'https://raw.githubusercontent.com/ovasylenko/skillcrcuial-ecommerce-test-data/master/data.json'
-  //   )
-  //   writeFile(`${__dirname}/data/goods.json`, JSON.stringify(goodsData), 'utf-8')
-  //   return goodsData
-  // })
+  return readFile(`${__dirname}/data/goods.json`, 'utf-8')
+    .then((text) => {
+      return JSON.parse(text)
+    })
+    .catch(async () => {
+      const { data: goodsData } = await axios(
+        'https://raw.githubusercontent.com/ovasylenko/skillcrcuial-ecommerce-test-data/master/data.json'
+      )
+      writeFile(`${__dirname}/data/goods.json`, JSON.stringify(goodsData), 'utf-8')
+      return goodsData
+    })
 }
 
 server.get('/api/v1/goods', async (req, res) => {
@@ -55,27 +56,23 @@ server.get('/api/v1/goods', async (req, res) => {
 })
 
 const getRates = () => {
-  return readFile(`${__dirname}/data/ratesData.json`, 'utf-8').then((text) => {
-    return JSON.parse(text)
-  })
-  // .catch(async () => {
-  //   const ratesData = await axios(
-  //     'https://api.exchangerate.host/latest?base=USD&symbols=USD,EUR,CAD'
-  //   ).then(({ data }) => data.rates)
-  //   writeFile(`${__dirname}/data/ratesData.json`, JSON.stringify(ratesData), 'utf-8')
-  //   return ratesData
-  // })
+  return readFile(`${__dirname}/data/ratesData.json`, 'utf-8')
+    .then((text) => {
+      return JSON.parse(text)
+    })
+    .catch(async () => {
+      const ratesData = await axios(
+        'https://api.exchangerate.host/latest?base=USD&symbols=USD,EUR,CAD'
+      ).then(({ data }) => data.rates)
+      writeFile(`${__dirname}/data/ratesData.json`, JSON.stringify(ratesData), 'utf-8')
+      return ratesData
+    })
 }
 
 server.get('/api/v1/rates', async (req, res) => {
   const rates = await getRates()
   res.json(rates)
 })
-
-// server.get('/api/v1/rates', async (req, res) => {
-//   const { data } = await axios('https://api.exchangerate.host/latest?base=USD&symbols=USD,EUR,CAD')
-//   res.json(data.rates)
-// })
 
 server.get('/api/v1/logs', async (req, res) => {
   const logs = await readFile(`${__dirname}/data/logs.json`, 'utf-8')
