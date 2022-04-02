@@ -9,7 +9,7 @@ import cookieParser from 'cookie-parser'
 import config from './config'
 import Html from '../client/html'
 
-const { readFile, writeFile } = require('fs').promises
+const { readFile, writeFile, unlink } = require('fs').promises
 
 require('colors')
 
@@ -101,6 +101,11 @@ server.post('/api/v1/logs', async (req, res) => {
       return logObj
     })
   res.json(logs)
+})
+
+server.delete('/api/v1/logs', (req, res) => {
+  unlink(`${__dirname}/data/logs.json`)
+  res.json({ status: 'Deleted' })
 })
 
 server.use('/api/', (req, res) => {
