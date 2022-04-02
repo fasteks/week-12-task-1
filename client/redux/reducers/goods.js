@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { addToBasketLog, currencyLog, getLogs } from './logs'
+import { addToBasketLog, currencyLog, getLogs, removeFromBusketLog } from './logs'
 
 const GET_CARDS = 'market/goods/GET_CARDS'
 const ADD_TO_BUSKET = 'market/goods/ADD_TO_BUSKET'
@@ -276,6 +276,7 @@ export function removeFromBusket(product) {
       }
       return newSum
     }
+    dispatch(removeFromBusketLog(product.title))
     dispatch({
       type: REMOVE_FROM_BUSKET,
       removeProduct: updatedProductsArray,

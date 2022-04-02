@@ -72,3 +72,21 @@ export function addToBasketLog(title) {
     })
   }
 }
+
+export function removeFromBusketLog(title) {
+  return async (dispatch) => {
+    const formattedDate = () => {
+      const date = new Date().toISOString()
+      return `${date.slice(0, 10)} ${date.slice(11, 19)}`
+    }
+    await axios({
+      method: 'post',
+      url: '/api/v1/logs',
+      data: {
+        action: `${formattedDate()} - remove ${title} from the backet`
+      }
+    }).then(({ data }) => {
+      dispatch({ type: POST_LOGS, payload: data })
+    })
+  }
+}
