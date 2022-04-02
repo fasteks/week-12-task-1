@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const POST_LOGS = 'market/goods/POST_LOGS'
-const GET_LOGS = 'market/goods/GET_LOGS'
+// const GET_LOGS = 'market/goods/GET_LOGS'
 
 const initialState = {
   logsList: []
@@ -15,27 +15,27 @@ export default (state = initialState, action = {}) => {
         logsList: action.payload
       }
     }
-    case GET_LOGS: {
-      return {
-        ...state,
-        logsList: action.payload
-      }
-    }
+    // case GET_LOGS: {
+    //   return {
+    //     ...state,
+    //     logsList: action.payload
+    //   }
+    // }
     default:
       return state
   }
 }
 
-export function getLogs() {
-  return async (dispatch) => {
-    await axios({
-      method: 'get',
-      url: '/api/v1/logs'
-    }).then(({ data }) => {
-      dispatch({ type: GET_LOGS, payload: data })
-    })
-  }
-}
+// export function getLogs() {
+//   return async (dispatch) => {
+//     await axios({
+//       method: 'get',
+//       url: '/api/v1/logs'
+//     }).then(({ data }) => {
+//       dispatch({ type: GET_LOGS, payload: data })
+//     })
+//   }
+// }
 
 export function currencyLog(currency1, currency2) {
   return async (dispatch) => {
@@ -73,7 +73,7 @@ export function addToBasketLog(title) {
   }
 }
 
-export function removeFromBusketLog(title) {
+export function removeFromBasketLog(title) {
   return async (dispatch) => {
     const formattedDate = () => {
       const date = new Date().toISOString()
@@ -84,6 +84,24 @@ export function removeFromBusketLog(title) {
       url: '/api/v1/logs',
       data: {
         action: `${formattedDate()} - remove ${title} from the backet`
+      }
+    }).then(({ data }) => {
+      dispatch({ type: POST_LOGS, payload: data })
+    })
+  }
+}
+
+export function navigateToPageLog(url) {
+  return async (dispatch) => {
+    const formattedDate = () => {
+      const date = new Date().toISOString()
+      return `${date.slice(0, 10)} ${date.slice(11, 19)}`
+    }
+    await axios({
+      method: 'post',
+      url: '/api/v1/logs',
+      data: {
+        action: `${formattedDate()} - navigate to ${url} page`
       }
     }).then(({ data }) => {
       dispatch({ type: POST_LOGS, payload: data })
