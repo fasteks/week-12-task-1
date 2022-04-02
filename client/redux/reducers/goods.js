@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { currencyLogs } from './logs'
+import { currencyLogs, getLogs } from './logs'
 
 const GET_CARDS = 'market/goods/GET_CARDS'
 const ADD_TO_BUSKET = 'market/goods/ADD_TO_BUSKET'
@@ -108,7 +108,7 @@ export function getCards() {
         })
         return cardsArray
       }
-
+      dispatch(getLogs())
       dispatch({ type: GET_CARDS, goods: setPrice() })
     })
   }

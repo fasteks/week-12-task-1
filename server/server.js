@@ -5,13 +5,11 @@ import sockjs from 'sockjs'
 import { renderToStaticNodeStream } from 'react-dom/server'
 import React from 'react'
 import cookieParser from 'cookie-parser'
-// import axios from 'axios'
 
 import config from './config'
 import Html from '../client/html'
 
 const { readFile, writeFile } = require('fs').promises
-// const { readFile } = require('fs').promises
 
 require('colors')
 
@@ -78,6 +76,17 @@ server.get('/api/v1/rates', async (req, res) => {
 //   const { data } = await axios('https://api.exchangerate.host/latest?base=USD&symbols=USD,EUR,CAD')
 //   res.json(data.rates)
 // })
+
+server.get('/api/v1/logs', async (req, res) => {
+  const logs = await readFile(`${__dirname}/data/logs.json`, 'utf-8')
+    .then((logsArray) => {
+      return JSON.parse(logsArray)
+    })
+    .catch(() => {
+      return []
+    })
+  res.json(logs)
+})
 
 server.post('/api/v1/logs', async (req, res) => {
   const logs = await readFile(`${__dirname}/data/logs.json`, 'utf-8')

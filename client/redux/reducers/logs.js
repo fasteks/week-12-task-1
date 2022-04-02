@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const POST_LOGS = 'market/goods/POST_LOGS'
+const GET_LOGS = 'market/goods/GET_LOGS'
 
 const initialState = {
   logsList: []
@@ -11,11 +12,28 @@ export default (state = initialState, action = {}) => {
     case POST_LOGS: {
       return {
         ...state,
-        logsList: [...state.logsList, action.payload]
+        logsList: [...state.logsList, ...action.payload]
+      }
+    }
+    case GET_LOGS: {
+      return {
+        ...state,
+        logsList: action.payload
       }
     }
     default:
       return state
+  }
+}
+
+export function getLogs() {
+  return async (dispatch) => {
+    await axios({
+      method: 'get',
+      url: '/api/v1/logs'
+    }).then(({ data }) => {
+      dispatch({ type: GET_LOGS, payload: data })
+    })
   }
 }
 
