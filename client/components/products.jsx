@@ -18,6 +18,4 @@ const Products = () => {
   )
 }
 
-Products.propTypes = {}
-
-export default Products
+export default React.memo(Products)

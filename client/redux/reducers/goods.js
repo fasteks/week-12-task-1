@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { currencyLogs } from './logs'
 
 const GET_CARDS = 'market/goods/GET_CARDS'
 const ADD_TO_BUSKET = 'market/goods/ADD_TO_BUSKET'
@@ -298,7 +299,7 @@ export function getRates() {
 export function changeCurrency(curr) {
   return (dispatch, getState) => {
     const state = getState()
-    const { products, rates } = state.goods
+    const { products, rates, currency } = state.goods
 
     const calcSum = () => {
       const calcTotalSum = products.map((it) => {
@@ -341,6 +342,7 @@ export function changeCurrency(curr) {
         [CAD_CURRENCY]: totalSumCadFixed
       }
     }
+    dispatch(currencyLogs(currency, curr))
     dispatch({
       type: CHANGE_CURRENCY,
       currencySum: calcSum(),

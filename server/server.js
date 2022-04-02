@@ -10,8 +10,8 @@ import cookieParser from 'cookie-parser'
 import config from './config'
 import Html from '../client/html'
 
-// const { readFile, writeFile } = require('fs').promises
-const { readFile } = require('fs').promises
+const { readFile, writeFile } = require('fs').promises
+// const { readFile } = require('fs').promises
 
 require('colors')
 
@@ -78,6 +78,21 @@ server.get('/api/v1/rates', async (req, res) => {
 //   const { data } = await axios('https://api.exchangerate.host/latest?base=USD&symbols=USD,EUR,CAD')
 //   res.json(data.rates)
 // })
+
+server.post('/api/v1/logs', async (req, res) => {
+  const logs = await readFile(`${__dirname}/data/logs.json`, 'utf-8')
+    .then(async (logsArray) => {
+      const updatedLogs = [...JSON.parse(logsArray), req.body.action]
+      await writeFile(`${__dirname}/data/logs.json`, JSON.stringify(updatedLogs), 'utf-8')
+      return updatedLogs
+    })
+    .catch(async () => {
+      const logObj = [req.body.action]
+      await writeFile(`${__dirname}/data/logs.json`, JSON.stringify(logObj), 'utf-8')
+      return logObj
+    })
+  res.json(logs)
+})
 
 server.use('/api/', (req, res) => {
   res.status(404)
