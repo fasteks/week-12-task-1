@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { addToBasketLog, currencyLog, removeFromBasketLog } from './logs'
+import { addToBasketLog, currencyLog, removeFromBasketLog, sortByLog } from './logs'
 
 const GET_CARDS = 'market/goods/GET_CARDS'
 const ADD_TO_BASKET = 'market/goods/ADD_TO_BASKET'
@@ -360,6 +360,7 @@ export function sortCards(by) {
       const cardsSortedByName = cards.sort((a, b) => {
         return a.title.localeCompare(b.title)
       })
+      dispatch(sortByLog(by))
       dispatch({
         type: SORT_CARDS,
         sortedCards: cardsSortedByName
@@ -369,6 +370,7 @@ export function sortCards(by) {
       const cardsSortedByPrice = cards.sort((a, b) => {
         return b.price[USD_CURRENCY] - a.price[USD_CURRENCY]
       })
+      dispatch(sortByLog(by))
       dispatch({
         type: SORT_CARDS,
         sortedCards: cardsSortedByPrice
@@ -385,6 +387,7 @@ export function sortGoods(by) {
       const productsSortedByName = products.sort((a, b) => {
         return a.title.localeCompare(b.title)
       })
+      dispatch(sortByLog(by))
       dispatch({
         type: SORT_GOODS,
         sortedGoods: productsSortedByName
@@ -394,6 +397,7 @@ export function sortGoods(by) {
       const productsSortedByPrice = products.sort((a, b) => {
         return b.price[USD_CURRENCY] - a.price[USD_CURRENCY]
       })
+      dispatch(sortByLog(by))
       dispatch({
         type: SORT_GOODS,
         sortedGoods: productsSortedByPrice

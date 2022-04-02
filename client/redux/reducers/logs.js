@@ -108,3 +108,21 @@ export function navigateToPageLog(url) {
     })
   }
 }
+
+export function sortByLog(by) {
+  return async (dispatch) => {
+    const formattedDate = () => {
+      const date = new Date().toISOString()
+      return `${date.slice(0, 10)} ${date.slice(11, 19)}`
+    }
+    await axios({
+      method: 'post',
+      url: '/api/v1/logs',
+      data: {
+        action: `${formattedDate()} - sort by ${by}`
+      }
+    }).then(({ data }) => {
+      dispatch({ type: POST_LOGS, payload: data })
+    })
+  }
+}
