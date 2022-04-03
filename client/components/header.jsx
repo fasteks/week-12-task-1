@@ -7,7 +7,7 @@ import { changeCurrency, sortCards, sortGoods } from '../redux/reducers/goods'
 const Header = () => {
   const params = useParams()
   const dispatch = useDispatch()
-  const { currency, sum, order } = useSelector((s) => s.goods)
+  const { sum, order } = useSelector((s) => s.goods)
   const isUrl = params[0].length === 0
   return (
     <div className="flex justify-evenly items-center bg-teal-600 p-5 font-semibold text-white">
@@ -82,7 +82,7 @@ const Header = () => {
           <span id="order-count">Order: {order}</span>
         </Link>
       )}
-      <p>Total cost: {sum[currency]}</p>
+      <p>Total cost: {sum}</p>
     </div>
   )
 }
