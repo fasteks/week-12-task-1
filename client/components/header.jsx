@@ -2,7 +2,9 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { changeCurrency, sortCards, sortGoods } from '../redux/reducers/goods'
+// import { changeCurrency, sortCards, sortGoods, sortCardsServer } from '../redux/reducers/goods'
+// import { changeCurrency, sortGoods, sortCardsServer, sortGoodsServer } from '../redux/reducers/goods'
+import { changeCurrency, sortCardsServer, sortGoodsServer } from '../redux/reducers/goods'
 
 const Header = (props) => {
   const dispatch = useDispatch()
@@ -56,8 +58,10 @@ const Header = (props) => {
           id="sort-price"
           className="mx-1 ml-2 p-1 hover:rounded-md hover:bg-lime-500 hover:scale-110 focus:rounded-md focus:bg-white focus:text-teal-800"
           onClick={() => {
-            dispatch(sortGoods('price'))
-            dispatch(sortCards('price'))
+            // dispatch(sortGoods('price'))
+            // dispatch(sortCards('price'))
+            dispatch(sortCardsServer('price'))
+            dispatch(sortGoodsServer('price'))
           }}
         >
           Price
@@ -68,8 +72,10 @@ const Header = (props) => {
           id="sort-name"
           className="mx-1 p-1 hover:rounded-md hover:bg-lime-500 hover:scale-110 focus:rounded-md focus:bg-white focus:text-teal-800"
           onClick={() => {
-            dispatch(sortGoods('name'))
-            dispatch(sortCards('name'))
+            // dispatch(sortGoods('name'))
+            // dispatch(sortCards('name'))
+            dispatch(sortCardsServer('name'))
+            dispatch(sortGoodsServer('name'))
           }}
         >
           Name

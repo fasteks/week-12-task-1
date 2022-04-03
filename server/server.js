@@ -10,6 +10,8 @@ import axios from 'axios'
 import config from './config'
 import Html from '../client/html'
 
+import sortDataArray from './common'
+
 const { readFile, writeFile, unlink } = require('fs').promises
 
 require('colors')
@@ -104,6 +106,15 @@ server.post('/api/v1/logs', async (req, res) => {
 server.delete('/api/v1/logs', (req, res) => {
   unlink(`${__dirname}/data/logs.json`)
   res.json({ status: 'Deleted' })
+})
+
+server.post('/api/v1/sort', async (req, res) => {
+  // const arrayOfProducts = await getProductsFunc()
+  const { array, action } = req.body
+  const sortedProductsArray = sortDataArray(array, action)
+  // await writeFile(`${__dirname}/data/goods.json`, JSON.stringify(sortedProductsArray), 'utf-8')
+  // res.json(sortedProductsArray.slice(0, 50))
+  res.json(sortedProductsArray)
 })
 
 server.use('/api/', (req, res) => {

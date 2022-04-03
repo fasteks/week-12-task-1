@@ -131,6 +131,29 @@ export function sortCards(by) {
   }
 }
 
+export function sortCardsServer(by) {
+  return async (dispatch, useState) => {
+    const { rates, currency, cards } = useState().goods
+    await axios({
+      method: 'post',
+      url: 'api/v1/sort',
+      data: {
+        array: cards,
+        action: by
+      }
+    })
+      .then(({ data }) => data)
+      .then((sortedArray) => {
+        const cardsArray = sortedArray.map((it) => {
+          const currenciedPrice = +it.price * +rates[currency]
+          const currenciedPriceFixed = currenciedPrice.toFixed(2)
+          return { ...it, priceCurrency: currenciedPriceFixed }
+        })
+        dispatch({ type: SORT_CARDS, sortedCards: cardsArray })
+      })
+  }
+}
+
 export function sortGoods(by) {
   return (dispatch, getStore) => {
     const store = getStore()
@@ -155,6 +178,24 @@ export function sortGoods(by) {
         sortedGoods: productsSortedByPrice
       })
     }
+  }
+}
+
+export function sortGoodsServer(by) {
+  return async (dispatch, useState) => {
+    const { products } = useState().goods
+    await axios({
+      method: 'post',
+      url: 'api/v1/sort',
+      data: {
+        array: products,
+        action: by
+      }
+    })
+      .then(({ data }) => data)
+      .then((sortedArray) => {
+        dispatch({ type: SORT_GOODS, sortedGoods: sortedArray })
+      })
   }
 }
 
