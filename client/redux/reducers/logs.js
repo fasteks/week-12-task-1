@@ -22,8 +22,6 @@ const initialState = {
 //     }
 // }
 // 2. transfer data sorting to server
-// 3. refactoring of transition data from using useState to transfer in props
-// from parent to children components in case it just render data
 // 5. refactoring into table structure view
 
 export default (state = initialState, action = {}) => {

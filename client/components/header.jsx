@@ -1,21 +1,21 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { changeCurrency, sortCards, sortGoods } from '../redux/reducers/goods'
 
-const Header = () => {
-  const params = useParams()
+const Header = (props) => {
   const dispatch = useDispatch()
-  const { sum, order } = useSelector((s) => s.goods)
-  const isUrl = params[0].length === 0
+  const { sum } = useSelector((s) => s.goods)
+  const { order } = useSelector((s) => s.goods)
+  const isUrl = props.title === 'Market'
   return (
-    <div className="flex justify-evenly items-center bg-teal-600 p-5 font-semibold text-white">
+    <div className="flex justify-evenly items-center w-full p-2 font-semibold text-white bg-teal-600">
       {isUrl ? (
-        <p>Main</p>
+        <p>Green Market</p>
       ) : (
         <Link to="/" id="brand-name">
-          Main
+          Green Market
         </Link>
       )}
       <div>
@@ -76,13 +76,27 @@ const Header = () => {
         </button>
       </div>
       {!isUrl ? (
-        <span id="order-count">Order: {order}</span>
+        <div className="flex justify-evenly items-center w-32">
+          <span>Order:</span>
+          <div to="/basket" className="flex flex-col items-center text-yellow-300">
+            <span id="order-count" className="text-base">
+              {order}
+            </span>
+            <i className="fa fa-shopping-cart" style={{ fontSize: '32px' }} />
+          </div>
+        </div>
       ) : (
-        <Link to="/basket">
-          <span id="order-count">Order: {order}</span>
-        </Link>
+        <div className="flex justify-evenly items-center w-32">
+          <span>Order:</span>
+          <Link to="/basket" className="flex flex-col items-center text-yellow-300">
+            <span id="order-count" className="text-base">
+              {order}
+            </span>
+            <i className="fa fa-shopping-cart" style={{ fontSize: '32px' }} />
+          </Link>
+        </div>
       )}
-      <p>Total cost: {sum}</p>
+      <p className="w-32">Total cost: {sum}</p>
     </div>
   )
 }

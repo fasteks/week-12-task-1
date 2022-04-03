@@ -20,8 +20,8 @@ const Home = () => {
 
   return (
     <>
-      <Head title={params.basket || 'Main'} />
-      <Header title={params.basket || 'Main'} />
+      <Head title={params[0] === '' ? 'Market' : 'Basket'} />
+      <Header title={params[0] === '' ? 'Market' : 'Basket'} />
       <Switch>
         <Route exact path="/" component={Main} />
         <Route exact path="/:basket" component={Basket} />

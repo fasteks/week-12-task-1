@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux'
 import Card from './card'
 
 const Cards = () => {
-  const { cards } = useSelector((s) => s.goods)
+  const cardsArray = useSelector((s) => s.goods.cards)
 
   return (
     <>
-      {cards.map((currentCard) => (
+      {cardsArray.map((currentCard) => (
         <Card key={currentCard.id} card={currentCard} />
       ))}
     </>

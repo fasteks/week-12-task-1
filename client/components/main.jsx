@@ -21,7 +21,7 @@ const Main = () => {
   }, [])
 
   return (
-    <div className="flex flex-wrap justify-evenly h-full">
+    <div className="flex flex-wrap justify-evenly h-full bg-green-100">
       <Cards />
     </div>
   )
