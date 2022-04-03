@@ -21,7 +21,7 @@ const Header = (props) => {
       <div>
         <button
           type="button"
-          className="mx-1"
+          className="mx-1 p-1 hover:rounded-md hover:bg-lime-500 hover:scale-110 focus:rounded-md focus:bg-white focus:text-teal-800"
           onClick={() => {
             dispatch(changeCurrency('USD'))
           }}
@@ -31,7 +31,7 @@ const Header = (props) => {
         |
         <button
           type="button"
-          className="mx-1"
+          className="mx-1 p-1 hover:rounded-md hover:bg-lime-500 hover:scale-110 focus:rounded-md focus:bg-white focus:text-teal-800"
           onClick={() => {
             dispatch(changeCurrency('EUR'))
           }}
@@ -41,7 +41,7 @@ const Header = (props) => {
         |
         <button
           type="button"
-          className="mx-1"
+          className="mx-1 p-1 hover:rounded-md hover:bg-lime-500 hover:scale-110 focus:rounded-md focus:bg-white focus:text-teal-800"
           onClick={() => {
             dispatch(changeCurrency('CAD'))
           }}
@@ -49,12 +49,12 @@ const Header = (props) => {
           CAD
         </button>
       </div>
-      <div className="flex">
+      <div className="flex items-center">
         Sort By:
         <button
           type="button"
           id="sort-price"
-          className="mx-1 ml-2"
+          className="mx-1 ml-2 p-1 hover:rounded-md hover:bg-lime-500 hover:scale-110 focus:rounded-md focus:bg-white focus:text-teal-800"
           onClick={() => {
             dispatch(sortGoods('price'))
             dispatch(sortCards('price'))
@@ -66,7 +66,7 @@ const Header = (props) => {
         <button
           type="button"
           id="sort-name"
-          className="mx-1"
+          className="mx-1 p-1 hover:rounded-md hover:bg-lime-500 hover:scale-110 focus:rounded-md focus:bg-white focus:text-teal-800"
           onClick={() => {
             dispatch(sortGoods('name'))
             dispatch(sortCards('name'))
@@ -82,7 +82,10 @@ const Header = (props) => {
             <span id="order-count" className="text-base">
               {order}
             </span>
-            <i className="fa fa-shopping-cart" style={{ fontSize: '32px' }} />
+            <i
+              className="fa fa-shopping-cart hover:-rotate-12 hover:scale-110"
+              style={{ fontSize: '32px' }}
+            />
           </div>
         </div>
       ) : (
@@ -92,7 +95,10 @@ const Header = (props) => {
             <span id="order-count" className="text-base">
               {order}
             </span>
-            <i className="fa fa-shopping-cart" style={{ fontSize: '32px' }} />
+            <i
+              className="fa fa-shopping-cart hover:-rotate-12 hover:scale-110"
+              style={{ fontSize: '32px' }}
+            />
           </Link>
         </div>
       )}

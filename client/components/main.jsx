@@ -7,7 +7,8 @@ import { getCards, getRates } from '../redux/reducers/goods'
 
 const Main = () => {
   const dispatch = useDispatch()
-  const { cards, rates } = useSelector((s) => s.goods)
+  const { cards } = useSelector((s) => s.goods)
+  const { rates } = useSelector((s) => s.goods)
   const EUR = 'EUR'
   useEffect(() => {
     if (!rates[EUR]) {
