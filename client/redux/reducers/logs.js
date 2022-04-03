@@ -21,7 +21,6 @@ const initialState = {
 //       return next(action)
 //     }
 // }
-// 2. transfer data sorting to server
 // 5. refactoring into table structure view
 
 export default (state = initialState, action = {}) => {

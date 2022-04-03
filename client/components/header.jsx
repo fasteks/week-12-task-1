@@ -84,29 +84,32 @@ const Header = (props) => {
       {!isUrl ? (
         <div className="flex justify-evenly items-center w-32">
           <span>Order:</span>
-          <div to="/basket" className="flex flex-col items-center text-yellow-300">
-            <span id="order-count" className="text-base">
+          <div to="/basket" className="flex flex-col items-center text-yellow-300 group">
+            <span
+              id="order-count"
+              className="text-xl font-bold group-hover:animate-spin duration-400 ease-in"
+            >
               {order}
             </span>
-            <i
-              className="fa fa-shopping-cart hover:-rotate-12 hover:scale-110"
-              style={{ fontSize: '32px' }}
-            />
           </div>
         </div>
       ) : (
-        <div className="flex justify-evenly items-center w-32">
-          <span>Order:</span>
-          <Link to="/basket" className="flex flex-col items-center text-yellow-300">
-            <span id="order-count" className="text-base">
-              {order}
-            </span>
+        <Link
+          to="/basket"
+          id="order-count"
+          className="flex items-start justify-evenly items-center w-32 group"
+        >
+          <p className="flex flex-col items-center">
+            <span>Order:</span>
             <i
-              className="fa fa-shopping-cart hover:-rotate-12 hover:scale-110"
-              style={{ fontSize: '32px' }}
+              className="fa fa-shopping-cart text-yellow-300 group-hover:-rotate-6 group-hover:translate-x-12 ease-in duration-200"
+              style={{ fontSize: '28px' }}
             />
-          </Link>
-        </div>
+          </p>
+          <p className="self-start -mt-1.5 -ml-1 text-xl text-yellow-300 group-hover:-rotate-6 group-hover:translate-y-5 ease-in duration-200">
+            {order}
+          </p>
+        </Link>
       )}
       <p className="w-32">Total cost: {sum}</p>
     </div>
