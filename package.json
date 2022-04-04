@@ -157,10 +157,10 @@
     },
     "nodemonConfig": {
         "ignore": [
-          "*.hot-update.json",
-          "goods.json",
-          "ratesData.json",
-          "logs.json"
+            "*.hot-update.json",
+            "goods.json",
+            "ratesData.json",
+            "logs.json"
         ]
     }
 }
