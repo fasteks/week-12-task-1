@@ -6,8 +6,8 @@ const GET_RATES = 'market/goods/GET_RATES'
 export const ADD_TO_BASKET = 'market/goods/ADD_TO_BASKET'
 export const REMOVE_FROM_BASKET = 'market/goods/REMOVE_FROM_BASKET'
 export const CHANGE_CURRENCY = 'market/goods/CHANGE_CURRENCY'
-const SORT_GOODS = 'market/goods/SORT_GOODS'
-const SORT_CARDS = 'market/goods/SORT_CARDS'
+export const SORT_GOODS = 'market/goods/SORT_GOODS'
+export const SORT_CARDS = 'market/goods/SORT_CARDS'
 const USD_CURRENCY = 'USD'
 
 const initialState = {
@@ -104,32 +104,32 @@ export function getRates() {
   }
 }
 
-export function sortCards(by) {
-  return (dispatch, getStore) => {
-    const store = getStore()
-    const { cards } = store.goods
-    if (by === 'name') {
-      const cardsSortedByName = cards.sort((a, b) => {
-        return a.title.localeCompare(b.title)
-      })
-      // dispatch(sortByLog(by))
-      dispatch({
-        type: SORT_CARDS,
-        sortedCards: cardsSortedByName
-      })
-    }
-    if (by === 'price') {
-      const cardsSortedByPrice = cards.sort((a, b) => {
-        return b.priceCurrency - a.priceCurrency
-      })
-      // dispatch(sortByLog(by))
-      dispatch({
-        type: SORT_CARDS,
-        sortedCards: cardsSortedByPrice
-      })
-    }
-  }
-}
+// export function sortCards(by) {
+//   return (dispatch, getStore) => {
+//     const store = getStore()
+//     const { cards } = store.goods
+//     if (by === 'name') {
+//       const cardsSortedByName = cards.sort((a, b) => {
+//         return a.title.localeCompare(b.title)
+//       })
+//       // dispatch(sortByLog(by))
+//       dispatch({
+//         type: SORT_CARDS,
+//         sortedCards: cardsSortedByName
+//       })
+//     }
+//     if (by === 'price') {
+//       const cardsSortedByPrice = cards.sort((a, b) => {
+//         return b.priceCurrency - a.priceCurrency
+//       })
+//       // dispatch(sortByLog(by))
+//       dispatch({
+//         type: SORT_CARDS,
+//         sortedCards: cardsSortedByPrice
+//       })
+//     }
+//   }
+// }
 
 export function sortCardsServer(by) {
   return async (dispatch, useState) => {
@@ -149,37 +149,37 @@ export function sortCardsServer(by) {
           const currenciedPriceFixed = currenciedPrice.toFixed(2)
           return { ...it, priceCurrency: currenciedPriceFixed }
         })
-        dispatch({ type: SORT_CARDS, sortedCards: cardsArray })
+        dispatch({ type: SORT_CARDS, sortedCards: cardsArray, sort: by })
       })
   }
 }
 
-export function sortGoods(by) {
-  return (dispatch, getStore) => {
-    const store = getStore()
-    const { products } = store.goods
-    if (products.length > 0 && by === 'name') {
-      const productsSortedByName = products.sort((a, b) => {
-        return a.title.localeCompare(b.title)
-      })
-      // dispatch(sortByLog(by))
-      dispatch({
-        type: SORT_GOODS,
-        sortedGoods: productsSortedByName
-      })
-    }
-    if (products.length > 0 && by === 'price') {
-      const productsSortedByPrice = products.sort((a, b) => {
-        return b.priceCurrency - a.priceCurrency
-      })
-      // dispatch(sortByLog(by))
-      dispatch({
-        type: SORT_GOODS,
-        sortedGoods: productsSortedByPrice
-      })
-    }
-  }
-}
+// export function sortGoods(by) {
+//   return (dispatch, getStore) => {
+//     const store = getStore()
+//     const { products } = store.goods
+//     if (products.length > 0 && by === 'name') {
+//       const productsSortedByName = products.sort((a, b) => {
+//         return a.title.localeCompare(b.title)
+//       })
+//       // dispatch(sortByLog(by))
+//       dispatch({
+//         type: SORT_GOODS,
+//         sortedGoods: productsSortedByName
+//       })
+//     }
+//     if (products.length > 0 && by === 'price') {
+//       const productsSortedByPrice = products.sort((a, b) => {
+//         return b.priceCurrency - a.priceCurrency
+//       })
+//       // dispatch(sortByLog(by))
+//       dispatch({
+//         type: SORT_GOODS,
+//         sortedGoods: productsSortedByPrice
+//       })
+//     }
+//   }
+// }
 
 export function sortGoodsServer(by) {
   return async (dispatch, useState) => {
@@ -194,7 +194,7 @@ export function sortGoodsServer(by) {
     })
       .then(({ data }) => data)
       .then((sortedArray) => {
-        dispatch({ type: SORT_GOODS, sortedGoods: sortedArray })
+        dispatch({ type: SORT_GOODS, sortedGoods: sortedArray, sort: by })
       })
   }
 }

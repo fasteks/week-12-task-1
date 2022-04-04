@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { POST_LOGS } from '../reducers/logs'
-import { CHANGE_CURRENCY, ADD_TO_BASKET, REMOVE_FROM_BASKET } from '../reducers/goods'
+import { CHANGE_CURRENCY, ADD_TO_BASKET, REMOVE_FROM_BASKET, SORT_CARDS } from '../reducers/goods'
 
 const formattedDate = () => {
   const date = new Date().toISOString()
@@ -47,6 +47,28 @@ export default () => {
             dispatch({ type: POST_LOGS, payload: data })
           })
         }
+        if (action.type === SORT_CARDS) {
+          axios({
+            method: 'post',
+            url: '/api/v1/logs',
+            data: {
+              log: `${formattedDate()} - sort by ${action.sort}`
+            }
+          }).then(({ data }) => {
+            dispatch({ type: POST_LOGS, payload: data })
+          })
+        }
+        // if (action.type === 1) {
+        //   axios({
+        //     method: 'post',
+        //     url: '/api/v1/logs',
+        //     data: {
+        //       log: `${formattedDate()} - navigate to ${1} page`
+        //     }
+        //   }).then(({ data }) => {
+        //     dispatch({ type: POST_LOGS, payload: data })
+        //   })
+        // }
         return next(action)
       }
     }
