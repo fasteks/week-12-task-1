@@ -13,21 +13,24 @@ const TableRow = (props) => {
     .map((el) => el.count)
     .join()
   return (
-    <tr className="card flex flex-col items-center justify-between p-2 my-2 bg-yellow-100 border-2 rounded-lg border-lime-600">
-      <td>
+    <tr className="card flex flex-col items-center justify-between p-2 m-2 bg-yellow-100 border-2 rounded-lg border-lime-600">
+      <tr>
         <img className="card__image" src={card.image} alt={card.description} />
-      </td>
-      <td>
+      </tr>
+      <tr>
         <p className="card__title text-center font-bold">{card.title}</p>
-      </td>
-      <td>
-        <p className="card__price">Price: {card.priceCurrency}</p>
-      </td>
-      <td>
-        <span className="currency">Currency: {currentCurrency}</span>
-      </td>
-      <td>{counter && <p className="card__product--amount">Quantity in Basket: {counter}</p>}</td>
-      <td>
+      </tr>
+      <tr>
+        <p className="card__price">
+          Price: {card.priceCurrency} <span className="currency">{currentCurrency}</span>
+        </p>
+      </tr>
+      <tr>
+        {(counter && <p className="card__product--amount">In Cart Count: {counter}</p>) || (
+          <p>&nbsp;</p>
+        )}
+      </tr>
+      <tr>
         <button
           type="button"
           className="p-1 mt-1 rounded-md bg-rose-500 text-white"
@@ -37,7 +40,7 @@ const TableRow = (props) => {
         >
           Add to Basket
         </button>
-      </td>
+      </tr>
     </tr>
   )
 }
