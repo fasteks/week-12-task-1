@@ -2,7 +2,7 @@ import { createStore, compose, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 
-import { logger } from './middleware/logger'
+import logger from './middleware/logger'
 
 import createRootReducer from './reducers'
 

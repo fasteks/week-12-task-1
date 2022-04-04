@@ -1,21 +1,20 @@
 import axios from 'axios'
 
 import { POST_LOGS } from '../reducers/logs'
-import { CHANGE_CURRENCY } from '../reducers/goods'
+import { CHANGE_CURRENCY, ADD_TO_BASKET, REMOVE_FROM_BASKET } from '../reducers/goods'
 
 const formattedDate = () => {
   const date = new Date().toISOString()
   return `${date.slice(0, 10)} ${date.slice(11, 19)}`
 }
 
-export function logger() {
+export default () => {
   return (store) => {
     const { dispatch, getState } = store
     return (next) => {
       return (action) => {
-        const { currency } = getState().goods
         if (action.type === CHANGE_CURRENCY) {
-          console.log('inside CHANGE_CURRENCY action')
+          const { currency } = getState().goods
           axios({
             method: 'post',
             url: '/api/v1/logs',
@@ -26,30 +25,28 @@ export function logger() {
             dispatch({ type: POST_LOGS, payload: data })
           })
         }
-
-        console.log('outside of any type of action')
-        return next(action)
-      }
-    }
-  }
-}
-
-// export function logs(storeApi) {
-//   return function wrapDispatch(next) {
-//     return function handleAction(action) {
-//       return next(action)
-//     }
-//   }
-// }
-
-export function func() {
-  return (dispatch, getState) => {
-    return (next) => {
-      return (action) => {
-        if (typeof action === 'function') {
-          return action(dispatch, getState)
+        if (action.type === ADD_TO_BASKET) {
+          axios({
+            method: 'post',
+            url: '/api/v1/logs',
+            data: {
+              log: `${formattedDate()} - add ${action.cardTitle} to the basket`
+            }
+          }).then(({ data }) => {
+            dispatch({ type: POST_LOGS, payload: data })
+          })
         }
-        // пиши шо хочешь сделать
+        if (action.type === REMOVE_FROM_BASKET) {
+          axios({
+            method: 'post',
+            url: '/api/v1/logs',
+            data: {
+              log: `${formattedDate()} - remove ${action.productTitle} from the backet`
+            }
+          }).then(({ data }) => {
+            dispatch({ type: POST_LOGS, payload: data })
+          })
+        }
         return next(action)
       }
     }

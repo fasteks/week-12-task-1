@@ -2,9 +2,9 @@ import axios from 'axios'
 // import { addToBasketLog, removeFromBasketLog, sortByLog, currencyLog } from './logs'
 
 const GET_CARDS = 'market/goods/GET_CARDS'
-const ADD_TO_BASKET = 'market/goods/ADD_TO_BASKET'
-const REMOVE_FROM_BASKET = 'market/goods/REMOVE_FROM_BASKET'
 const GET_RATES = 'market/goods/GET_RATES'
+export const ADD_TO_BASKET = 'market/goods/ADD_TO_BASKET'
+export const REMOVE_FROM_BASKET = 'market/goods/REMOVE_FROM_BASKET'
 export const CHANGE_CURRENCY = 'market/goods/CHANGE_CURRENCY'
 const SORT_GOODS = 'market/goods/SORT_GOODS'
 const SORT_CARDS = 'market/goods/SORT_CARDS'
@@ -257,6 +257,7 @@ export function addToBasket(card) {
       // dispatch(addToBasketLog(card.title))
       dispatch({
         type: ADD_TO_BASKET,
+        cardTitle: card.title,
         addProduct: updatedProductsList,
         updatedSum: totalBasketSumFixed,
         addOrder: newOrder
@@ -284,6 +285,7 @@ export function addToBasket(card) {
       // dispatch(addToBasketLog(card.title))
       dispatch({
         type: ADD_TO_BASKET,
+        cardTitle: card.title,
         addProduct: updatedProductsList,
         updatedSum: totalBasketSumFixed,
         addOrder: newOrder
@@ -317,6 +319,7 @@ export function removeFromBusket(product) {
     // dispatch(removeFromBasketLog(product.title))
     dispatch({
       type: REMOVE_FROM_BASKET,
+      productTitle: product.title,
       removeProduct: updatedProductsArray,
       decOrder: newOrder,
       updatedSum: totalBasketSumFixed

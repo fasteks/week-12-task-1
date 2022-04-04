@@ -39,59 +39,59 @@ export default (state = initialState, action = {}) => {
 //   }
 // }
 
-export function currencyLog(currency1, currency2) {
-  return async (dispatch) => {
-    const formattedDate = () => {
-      const date = new Date().toISOString()
-      return `${date.slice(0, 10)} ${date.slice(11, 19)}`
-    }
-    await axios({
-      method: 'post',
-      url: '/api/v1/logs',
-      data: {
-        action: `${formattedDate()} - change currency from ${currency1} to ${currency2}`
-      }
-    }).then(({ data }) => {
-      dispatch({ type: POST_LOGS, payload: data })
-    })
-  }
-}
+// export function currencyLog(currency1, currency2) {
+//   return async (dispatch) => {
+//     const formattedDate = () => {
+//       const date = new Date().toISOString()
+//       return `${date.slice(0, 10)} ${date.slice(11, 19)}`
+//     }
+//     await axios({
+//       method: 'post',
+//       url: '/api/v1/logs',
+//       data: {
+//         action: `${formattedDate()} - change currency from ${currency1} to ${currency2}`
+//       }
+//     }).then(({ data }) => {
+//       dispatch({ type: POST_LOGS, payload: data })
+//     })
+//   }
+// }
 
-export function addToBasketLog(title) {
-  return async (dispatch) => {
-    const formattedDate = () => {
-      const date = new Date().toISOString()
-      return `${date.slice(0, 10)} ${date.slice(11, 19)}`
-    }
-    await axios({
-      method: 'post',
-      url: '/api/v1/logs',
-      data: {
-        action: `${formattedDate()} - add ${title} to the backet`
-      }
-    }).then(({ data }) => {
-      dispatch({ type: POST_LOGS, payload: data })
-    })
-  }
-}
+// export function addToBasketLog(title) {
+//   return async (dispatch) => {
+//     const formattedDate = () => {
+//       const date = new Date().toISOString()
+//       return `${date.slice(0, 10)} ${date.slice(11, 19)}`
+//     }
+//     await axios({
+//       method: 'post',
+//       url: '/api/v1/logs',
+//       data: {
+//         action: `${formattedDate()} - add ${title} to the backet`
+//       }
+//     }).then(({ data }) => {
+//       dispatch({ type: POST_LOGS, payload: data })
+//     })
+//   }
+// }
 
-export function removeFromBasketLog(title) {
-  return async (dispatch) => {
-    const formattedDate = () => {
-      const date = new Date().toISOString()
-      return `${date.slice(0, 10)} ${date.slice(11, 19)}`
-    }
-    await axios({
-      method: 'post',
-      url: '/api/v1/logs',
-      data: {
-        action: `${formattedDate()} - remove ${title} from the backet`
-      }
-    }).then(({ data }) => {
-      dispatch({ type: POST_LOGS, payload: data })
-    })
-  }
-}
+// export function removeFromBasketLog(title) {
+//   return async (dispatch) => {
+//     const formattedDate = () => {
+//       const date = new Date().toISOString()
+//       return `${date.slice(0, 10)} ${date.slice(11, 19)}`
+//     }
+//     await axios({
+//       method: 'post',
+//       url: '/api/v1/logs',
+//       data: {
+//         action: `${formattedDate()} - remove ${title} from the backet`
+//       }
+//     }).then(({ data }) => {
+//       dispatch({ type: POST_LOGS, payload: data })
+//     })
+//   }
+// }
 
 export function navigateToPageLog(url) {
   return async (dispatch) => {
