@@ -1,26 +1,12 @@
 import axios from 'axios'
 
-const POST_LOGS = 'market/goods/POST_LOGS'
+export const POST_LOGS = 'market/goods/POST_LOGS'
 // const GET_LOGS = 'market/goods/GET_LOGS'
 
 const initialState = {
   logsList: []
 }
 
-// 1. transfer logs to middleware
-// https://redux.js.org/tutorials/fundamentals/part-4-store#middleware
-// like this --->
-//   function func() {
-//   return ({ dispatch, getState }) =>
-//     (next) =>
-//     (action) => {
-//       // if (typeof action === 'function') {
-//       //  return action(dispatch, getState);
-//       //}
-//       // пиши шо хочешь сделать
-//       return next(action)
-//     }
-// }
 // 5. refactoring into table structure view
 
 export default (state = initialState, action = {}) => {

@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Switch, Route, useParams } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+// import { useDispatch } from 'react-redux'
 
-import { navigateToPageLog } from '../redux/reducers/logs'
+// import { navigateToPageLog } from '../redux/reducers/logs'
 
 import Main from './main'
 import Basket from './basket'
@@ -12,11 +12,11 @@ import Header from './header'
 
 const Home = () => {
   const params = useParams()
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
 
-  useEffect(() => {
-    dispatch(navigateToPageLog(params[0] || 'main'))
-  }, [params])
+  // useEffect(() => {
+  //   dispatch(navigateToPageLog(params[0] || 'main'))
+  // }, [params])
 
   return (
     <>

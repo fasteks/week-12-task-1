@@ -91,12 +91,12 @@ server.get('/api/v1/logs', async (req, res) => {
 server.post('/api/v1/logs', async (req, res) => {
   const logs = await readFile(`${__dirname}/data/logs.json`, 'utf-8')
     .then(async (logsArray) => {
-      const updatedLogs = [...JSON.parse(logsArray), req.body.action]
+      const updatedLogs = [...JSON.parse(logsArray), req.body.log]
       await writeFile(`${__dirname}/data/logs.json`, JSON.stringify(updatedLogs), 'utf-8')
       return updatedLogs
     })
     .catch(async () => {
-      const logObj = [req.body.action]
+      const logObj = [req.body.log]
       await writeFile(`${__dirname}/data/logs.json`, JSON.stringify(logObj), 'utf-8')
       return logObj
     })
