@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import Cards from './cards'
+// import Cards from './cards'
+import Table from './table'
 
 import { getCards, getRates } from '../redux/reducers/goods'
 
@@ -22,8 +23,9 @@ const Main = () => {
   }, [])
 
   return (
-    <div className="flex flex-wrap justify-evenly h-full bg-green-100">
-      <Cards />
+    <div className="flex h-full bg-green-100">
+      {/* <Cards /> */}
+      <Table />
     </div>
   )
 }

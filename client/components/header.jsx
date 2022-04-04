@@ -82,7 +82,7 @@ const Header = (props) => {
         </button>
       </div>
       {!isUrl ? (
-        <div className="flex justify-evenly items-center w-32">
+        <div className="flex flex-col justify-evenly items-center w-32">
           <span>Order:</span>
           <div to="/basket" className="flex flex-col items-center text-yellow-300 group">
             <span
@@ -102,11 +102,11 @@ const Header = (props) => {
           <p className="flex flex-col items-center">
             <span>Order:</span>
             <i
-              className="fa fa-shopping-cart text-yellow-300 group-hover:-rotate-6 group-hover:translate-x-12 ease-in duration-200"
+              className="fa fa-shopping-cart text-yellow-300 group-hover:translate-x-12 ease-in duration-200"
               style={{ fontSize: '28px' }}
             />
           </p>
-          <p className="self-start -mt-1.5 -ml-1 text-xl text-yellow-300 group-hover:-rotate-6 group-hover:translate-y-5 ease-in duration-200">
+          <p className="self-start -mt-1.5 -ml-1 text-xl text-yellow-300 group-hover:translate-y-5 ease-in duration-200">
             {order}
           </p>
         </Link>
