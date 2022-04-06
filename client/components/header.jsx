@@ -12,7 +12,7 @@ const Header = (props) => {
   const { order } = useSelector((s) => s.goods)
   const isUrl = props.title === 'Market'
   return (
-    <div className="flex justify-evenly items-center w-full p-2 font-semibold text-white bg-teal-600">
+    <div className="flex justify-evenly items-center min-h-56px p-2 text-lg font-semibold text-white bg-teal-600">
       {isUrl ? (
         <p>Green Market</p>
       ) : (
@@ -82,7 +82,7 @@ const Header = (props) => {
         </button>
       </div>
       {!isUrl ? (
-        <div className="flex flex-col justify-evenly items-center w-32">
+        <div className="flex flex-col justify-evenly items-center w-36">
           <span>Order:</span>
           <div to="/basket" className="flex flex-col items-center text-yellow-300 group">
             <span
@@ -97,21 +97,21 @@ const Header = (props) => {
         <Link
           to="/basket"
           id="order-count"
-          className="flex items-start justify-evenly items-center w-32 group"
+          className="flex items-start justify-evenly items-center w-36 group"
         >
           <p className="flex flex-col items-center">
             <span>Order:</span>
             <i
-              className="fa fa-shopping-cart text-yellow-300 group-hover:translate-x-12 ease-in duration-200"
+              className="fa fa-shopping-cart text-yellow-300 group-hover:translate-x-11 ease-in duration-200"
               style={{ fontSize: '28px' }}
             />
           </p>
-          <p className="self-start -mt-1.5 -ml-1 text-xl text-yellow-300 group-hover:translate-y-5 ease-in duration-200">
+          <p className="self-start -mt-0.5 -ml-4 text-xl text-yellow-300 group-hover:translate-y-5 ease-in duration-200">
             {order}
           </p>
         </Link>
       )}
-      <p className="w-32">Total cost: {sum}</p>
+      <p className="w-36">Total cost: {sum}</p>
     </div>
   )
 }

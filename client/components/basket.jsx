@@ -11,8 +11,7 @@ const Basket = () => {
       <Products />
       <p
         id="total-amount"
-        // className="flex self-center justify-center py-5 px-10 rounded-md font-semibold text-white bg-teal-600"
-        className="flex py-5 px-10 rounded-md font-semibold text-white bg-teal-600"
+        className="flex justify-center p-5 box-border text-lg text-white font-semibold bg-teal-600"
       >
         Total cost: {currentSum}
       </p>

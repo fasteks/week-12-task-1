@@ -48,8 +48,9 @@ const getGoods = () => {
       const { data: goodsData } = await axios(
         'https://raw.githubusercontent.com/ovasylenko/skillcrcuial-ecommerce-test-data/master/data.json'
       )
-      writeFile(`${__dirname}/data/goods.json`, JSON.stringify(goodsData), 'utf-8')
-      return goodsData
+      const slicedGoodsData = goodsData.slice(0, 50)
+      writeFile(`${__dirname}/data/goods.json`, JSON.stringify(slicedGoodsData), 'utf-8')
+      return slicedGoodsData
     })
 }
 
