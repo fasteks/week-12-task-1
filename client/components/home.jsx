@@ -8,7 +8,7 @@ import Main from './main'
 import Basket from './basket'
 
 import Head from './head'
-import Header from './header'
+// import Header from './header'
 
 const Home = () => {
   const params = useParams()
@@ -19,14 +19,14 @@ const Home = () => {
   // }, [params])
 
   return (
-    <>
+    <div className="min-h-screen">
       <Head title={params[0] === '' ? 'Market' : 'Basket'} />
-      <Header title={params[0] === '' ? 'Market' : 'Basket'} />
+      {/* <Header title={params[0] === '' ? 'Market' : 'Basket'} /> */}
       <Switch>
         <Route exact path="/" component={Main} />
         <Route exact path="/:basket" component={Basket} />
       </Switch>
-    </>
+    </div>
   )
 }
 

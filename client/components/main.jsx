@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import Header from './header'
 // import Cards from './cards'
 import Table from './table'
 
@@ -23,7 +24,8 @@ const Main = () => {
   }, [])
 
   return (
-    <div className="flex h-full bg-green-100">
+    <div className="flex flex-col h-full bg-green-100">
+      <Header title="Market" />
       {/* <Cards /> */}
       <Table />
     </div>
