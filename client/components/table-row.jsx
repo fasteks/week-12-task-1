@@ -8,6 +8,14 @@ const TableRow = (props) => {
   const dispatch = useDispatch()
   const productsArray = useSelector((s) => s.goods.products)
   const currentCurrency = useSelector((s) => s.goods.currency)
+
+  // transition into bakset obj should looks like this:
+  // const bakset = {
+  //   c: { name: 'c', count: 1 },
+  //   a: { name: 'a', count: 2 },
+  //   b: { name: 'b', count: 5 }
+  // }
+
   const counter = productsArray
     .filter((it) => it.id === card.id)
     .map((el) => el.count)
