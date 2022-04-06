@@ -18,9 +18,7 @@ const Card = (props) => {
       <p className="card__title text-center font-bold">{card.title}</p>
       <p className="card__price">Price: {card.priceCurrency}</p>
       <span className="currency">Currency: {currentCurrency}</span>
-      {counter && (
-        <p className="card__product--amount">Quantity in Basket: {counter}</p>
-      )}
+      {counter && <p className="card__product--amount">Quantity in Basket: {counter}</p>}
       <button
         type="button"
         className="p-1 mt-1 rounded-md bg-rose-500 text-white"
