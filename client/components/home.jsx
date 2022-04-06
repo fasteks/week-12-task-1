@@ -10,7 +10,7 @@ const Home = () => {
   const params = useParams()
 
   return (
-    <div className="min-h-screen">
+    <div className="h-screen">
       <Head title={params[0] === '' ? 'Market' : 'Basket'} />
       <Switch>
         <Route exact path="/" component={Main} />
