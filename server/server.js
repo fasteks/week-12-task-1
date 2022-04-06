@@ -47,9 +47,9 @@ const getGoods = () => {
     .catch(async () => {
       const { data: goodsData } = await axios(
         'https://raw.githubusercontent.com/ovasylenko/skillcrcuial-ecommerce-test-data/master/data.json'
-      )
+      ).catch((error) => error)
       const slicedGoodsData = goodsData.slice(0, 50)
-      writeFile(`${__dirname}/data/goods.json`, JSON.stringify(slicedGoodsData), 'utf-8')
+      await writeFile(`${__dirname}/data/goods.json`, JSON.stringify(slicedGoodsData), 'utf-8')
       return slicedGoodsData
     })
 }
@@ -67,8 +67,10 @@ const getRates = () => {
     .catch(async () => {
       const ratesData = await axios(
         'https://api.exchangerate.host/latest?base=USD&symbols=USD,EUR,CAD'
-      ).then(({ data }) => data.rates)
-      writeFile(`${__dirname}/data/ratesData.json`, JSON.stringify(ratesData), 'utf-8')
+      )
+        .then(({ data }) => data.rates)
+        .catch((error) => error)
+      await writeFile(`${__dirname}/data/ratesData.json`, JSON.stringify(ratesData), 'utf-8')
       return ratesData
     })
 }
@@ -104,15 +106,15 @@ server.post('/api/v1/logs', async (req, res) => {
   res.json(logs)
 })
 
-server.delete('/api/v1/logs', (req, res) => {
-  unlink(`${__dirname}/data/logs.json`)
+server.delete('/api/v1/logs', async (req, res) => {
+  await unlink(`${__dirname}/data/logs.json`)
   res.json({ status: 'Deleted' })
 })
 
 server.post('/api/v1/sort', async (req, res) => {
   // const arrayOfProducts = await getProductsFunc()
-  const { array, action } = req.body
-  const sortedProductsArray = sortDataArray(array, action)
+  const { obj, action } = req.body
+  const sortedProductsArray = await sortDataArray(obj, action)
   // await writeFile(`${__dirname}/data/goods.json`, JSON.stringify(sortedProductsArray), 'utf-8')
   // res.json(sortedProductsArray.slice(0, 50))
   res.json(sortedProductsArray)

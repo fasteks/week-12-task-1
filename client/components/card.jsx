@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { addToBasket } from '../redux/reducers/goods'
+import { addToBasketObj } from '../redux/reducers/goods'
 
 const Card = (props) => {
   const { card } = props
@@ -23,7 +23,7 @@ const Card = (props) => {
         type="button"
         className="p-1 mt-1 rounded-md bg-rose-500 text-white"
         onClick={() => {
-          dispatch(addToBasket(card))
+          dispatch(addToBasketObj(card))
         }}
       >
         Add to Basket

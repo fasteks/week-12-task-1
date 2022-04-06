@@ -11,10 +11,21 @@ export const USD_CURRENCY = 'USD'
 export const EUR_CURRENCY = 'EUR'
 export const CAD_CURRENCY = 'CAD'
 
+// const initialState = {
+//   cards: [],
+//   products: [],
+//   sum: 0,
+//   rates: {
+//     [USD_CURRENCY]: 1
+//   },
+//   currency: USD_CURRENCY,
+//   order: 0
+// }
+
 const initialState = {
   cards: [],
-  products: [],
-  sum: 0,
+  products: {},
+  sum: (0).toFixed(2),
   rates: {
     [USD_CURRENCY]: 1
   },
@@ -37,9 +48,15 @@ export default (state = initialState, action = {}) => {
       }
     }
     case ADD_TO_BASKET: {
+      // return {
+      //   ...state,
+      //   products: action.addProduct,
+      //   sum: action.updatedSum,
+      //   order: action.addOrder
+      // }
       return {
         ...state,
-        products: action.addProduct,
+        products: action.updateProducts,
         sum: action.updatedSum,
         order: action.addOrder
       }
@@ -60,6 +77,12 @@ export default (state = initialState, action = {}) => {
         sum: action.updatedSum,
         order: action.decOrder
       }
+      // return {
+      //   ...state,
+      //   products: action.removeProduct,
+      //   sum: action.updatedSum,
+      //   order: action.decOrder
+      // }
     }
     case SORT_GOODS: {
       return {
@@ -82,26 +105,30 @@ export function getCards() {
   return async (dispatch, useStore) => {
     const store = useStore()
     const { rates, currency } = store.goods
-    await axios('/api/v1/goods').then(({ data }) => {
-      const cards = data
-      const cardsArray = cards.map((it) => {
-        const currenciedPrice = +it.price * +rates[currency]
-        const currenciedPriceFixed = currenciedPrice.toFixed(2)
-        return { ...it, priceCurrency: currenciedPriceFixed }
+    await axios('/api/v1/goods')
+      .then(({ data }) => {
+        const cards = data
+        const cardsArray = cards.map((it) => {
+          const currenciedPrice = +it.price * +rates[currency]
+          const currenciedPriceFixed = currenciedPrice.toFixed(2)
+          return { ...it, priceCurrency: currenciedPriceFixed }
+        })
+        dispatch({ type: GET_CARDS, goods: cardsArray })
       })
-      dispatch({ type: GET_CARDS, goods: cardsArray })
-    })
+      .catch((error) => error)
   }
 }
 
 export function getRates() {
   return async (dispatch) => {
-    await axios('/api/v1/rates').then(({ data }) => {
-      const fixedRates = Object.keys(data).reduce((acc, rec) => {
-        return { ...acc, [rec]: (+data[rec]).toFixed(2) }
-      }, {})
-      dispatch({ type: GET_RATES, getRates: fixedRates })
-    })
+    await axios('/api/v1/rates')
+      .then(({ data }) => {
+        const fixedRates = Object.keys(data).reduce((acc, rec) => {
+          return { ...acc, [rec]: (+data[rec]).toFixed(2) }
+        }, {})
+        dispatch({ type: GET_RATES, getRates: fixedRates })
+      })
+      .catch((error) => error)
   }
 }
 
@@ -112,7 +139,7 @@ export function sortCardsServer(by) {
       method: 'post',
       url: 'api/v1/sort',
       data: {
-        array: cards,
+        obj: cards,
         action: by
       }
     })
@@ -123,8 +150,10 @@ export function sortCardsServer(by) {
           const currenciedPriceFixed = currenciedPrice.toFixed(2)
           return { ...it, priceCurrency: currenciedPriceFixed }
         })
+
         dispatch({ type: SORT_CARDS, sortedCards: cardsArray, sort: by })
       })
+      .catch((error) => error)
   }
 }
 
@@ -135,7 +164,7 @@ export function sortGoodsServer(by) {
       method: 'post',
       url: 'api/v1/sort',
       data: {
-        array: products,
+        obj: products,
         action: by
       }
     })
@@ -143,10 +172,11 @@ export function sortGoodsServer(by) {
       .then((sortedArray) => {
         dispatch({ type: SORT_GOODS, sortedGoods: sortedArray, sort: by })
       })
+      .catch((error) => error)
   }
 }
 
-export function changeCurrency(curr) {
+export function changeCurrencyObj(curr) {
   return (dispatch, getState) => {
     const state = getState()
     const { products, rates, currency, cards } = state.goods
@@ -157,20 +187,24 @@ export function changeCurrency(curr) {
         return { ...it, priceCurrency: currenciedPriceFixed }
       })
 
-      const productsArray = products.map((it) => {
-        const currenciedPrice = it.price * rates[curr]
+      const productsObj = Object.keys(products).reduce((acc, rec) => {
+        const product = products[rec]
+        const currenciedPrice = product.price * rates[curr]
         const currenciedPriceFixed = currenciedPrice.toFixed(2)
-        const totalCurrenciedPrice = currenciedPriceFixed * it.count
+        const totalCurrenciedPrice = currenciedPriceFixed * product.count
         const totalCurrenciedPriceFixed = totalCurrenciedPrice.toFixed(2)
         return {
-          ...it,
-          priceCurrency: currenciedPriceFixed,
-          totalCurrencyPrice: totalCurrenciedPriceFixed
+          ...acc,
+          [product.id]: {
+            ...product,
+            priceCurrency: currenciedPriceFixed,
+            totalCurrencyPrice: totalCurrenciedPriceFixed
+          }
         }
-      })
+      }, products)
 
-      const totalBasketSum = productsArray.reduce((acc, rec) => {
-        return acc + +rec.totalCurrencyPrice
+      const totalBasketSum = Object.keys(productsObj).reduce((acc, rec) => {
+        return acc + +productsObj[rec].totalCurrencyPrice
       }, 0)
       const totalBasketSumFixed = totalBasketSum.toFixed(2)
 
@@ -178,95 +212,211 @@ export function changeCurrency(curr) {
         type: CHANGE_CURRENCY,
         curren: curr,
         updatedCards: cardsArray,
-        updatedProducts: productsArray,
+        updatedProducts: productsObj,
         totalSum: totalBasketSumFixed
       })
     }
   }
 }
 
-export function addToBasket(card) {
+// export function changeCurrency(curr) {
+//   return (dispatch, getState) => {
+//     const state = getState()
+//     const { products, rates, currency, cards } = state.goods
+//     if (curr !== currency) {
+//       const cardsArray = cards.map((it) => {
+//         const currenciedPrice = +it.price * +rates[curr]
+//         const currenciedPriceFixed = currenciedPrice.toFixed(2)
+//         return { ...it, priceCurrency: currenciedPriceFixed }
+//       })
+
+//       const productsArray = products.map((it) => {
+//         const currenciedPrice = it.price * rates[curr]
+//         const currenciedPriceFixed = currenciedPrice.toFixed(2)
+//         const totalCurrenciedPrice = currenciedPriceFixed * it.count
+//         const totalCurrenciedPriceFixed = totalCurrenciedPrice.toFixed(2)
+//         return {
+//           ...it,
+//           priceCurrency: currenciedPriceFixed,
+//           totalCurrencyPrice: totalCurrenciedPriceFixed
+//         }
+//       })
+
+//       const totalBasketSum = productsArray.reduce((acc, rec) => {
+//         return acc + +rec.totalCurrencyPrice
+//       }, 0)
+//       const totalBasketSumFixed = totalBasketSum.toFixed(2)
+
+//       dispatch({
+//         type: CHANGE_CURRENCY,
+//         curren: curr,
+//         updatedCards: cardsArray,
+//         updatedProducts: productsArray,
+//         totalSum: totalBasketSumFixed
+//       })
+//     }
+//   }
+// }
+
+export function addToBasketObj(card) {
   return async (dispatch, getState) => {
     const state = getState()
-    const { products, order } = state.goods
-    const newOrder = order + 1
+    const { products, sum, order } = state.goods
+    const newOrder = +order + 1
+    const totalBasketSum = +sum + +card.priceCurrency
+    const totalBasketSumFixed = totalBasketSum.toFixed(2)
 
-    const isCardInBasket = products.find((it) => it.id === card.id)
-
-    if (!isCardInBasket) {
-      const newProductObj = { ...card, count: 1, totalCurrencyPrice: card.priceCurrency }
-      const updatedProductsList = [...products, newProductObj]
-      const totalBasketSum = updatedProductsList.reduce((acc, rec) => {
-        return acc + +rec.totalCurrencyPrice
-      }, 0)
-      const totalBasketSumFixed = totalBasketSum.toFixed(2)
-
-      dispatch({
+    if (typeof products[card.id] === 'undefined') {
+      const updatedProducts = {
+        ...products,
+        [card.id]: { ...card, count: 1, totalCurrencyPrice: card.priceCurrency }
+      }
+      return dispatch({
         type: ADD_TO_BASKET,
-        cardTitle: card.title,
-        addProduct: updatedProductsList,
-        updatedSum: totalBasketSumFixed,
-        addOrder: newOrder
-      })
-    } else {
-      const updatedProductsList = await products.map((obj) => {
-        if (obj.id === card.id) {
-          const addCount = +obj.count + 1
-          const totalCurrenciedPrice = +obj.priceCurrency * addCount
-          const totalCurrenciedPriceFixed = totalCurrenciedPrice.toFixed(2)
-          return {
-            ...obj,
-            count: addCount,
-            totalCurrencyPrice: totalCurrenciedPriceFixed
-          }
-        }
-        return obj
-      })
-
-      const totalBasketSum = updatedProductsList.reduce((acc, rec) => {
-        return acc + +rec.totalCurrencyPrice
-      }, 0)
-      const totalBasketSumFixed = totalBasketSum.toFixed(2)
-
-      dispatch({
-        type: ADD_TO_BASKET,
-        cardTitle: card.title,
-        addProduct: updatedProductsList,
+        updateProducts: updatedProducts,
         updatedSum: totalBasketSumFixed,
         addOrder: newOrder
       })
     }
+
+    const updatedProducts = {
+      ...products,
+      [card.id]: {
+        ...products[card.id],
+        count: +[products[card.id].count] + 1,
+        totalCurrencyPrice: (
+          +[products[card.id].totalCurrencyPrice] + +[card.priceCurrency]
+        ).toFixed(2)
+      }
+    }
+    return dispatch({
+      type: ADD_TO_BASKET,
+      updateProducts: updatedProducts,
+      updatedSum: totalBasketSumFixed,
+      addOrder: newOrder
+    })
   }
 }
 
-export function removeFromBusket(product) {
+// export function addToBasket(card) {
+//   return async (dispatch, getState) => {
+//     const state = getState()
+//     const { products, order } = state.goods
+//     const newOrder = order + 1
+
+//     const isCardInBasket = products.find((it) => it.id === card.id)
+
+//     if (!isCardInBasket) {
+//       const newProductObj = { ...card, count: 1, totalCurrencyPrice: card.priceCurrency }
+//       const updatedProductsList = [...products, newProductObj]
+//       const totalBasketSum = updatedProductsList.reduce((acc, rec) => {
+//         return acc + +rec.totalCurrencyPrice
+//       }, 0)
+//       const totalBasketSumFixed = totalBasketSum.toFixed(2)
+
+//       dispatch({
+//         type: ADD_TO_BASKET,
+//         cardTitle: card.title,
+//         addProduct: updatedProductsList,
+//         updatedSum: totalBasketSumFixed,
+//         addOrder: newOrder
+//       })
+//     } else {
+//       const updatedProductsList = await products.map((obj) => {
+//         if (obj.id === card.id) {
+//           const addCount = +obj.count + 1
+//           const totalCurrenciedPrice = +obj.priceCurrency * addCount
+//           const totalCurrenciedPriceFixed = totalCurrenciedPrice.toFixed(2)
+//           return {
+//             ...obj,
+//             count: addCount,
+//             totalCurrencyPrice: totalCurrenciedPriceFixed
+//           }
+//         }
+//         return obj
+//       })
+
+//       const totalBasketSum = updatedProductsList.reduce((acc, rec) => {
+//         return acc + +rec.totalCurrencyPrice
+//       }, 0)
+//       const totalBasketSumFixed = totalBasketSum.toFixed(2)
+
+//       dispatch({
+//         type: ADD_TO_BASKET,
+//         cardTitle: card.title,
+//         addProduct: updatedProductsList,
+//         updatedSum: totalBasketSumFixed,
+//         addOrder: newOrder
+//       })
+//     }
+//   }
+// }
+
+// export function removeFromBusket(product) {
+//   return (dispatch, getStore) => {
+//     const store = getStore()
+//     const { products, sum, order } = store.goods
+//     const newOrder = order - 1
+
+//     const updatedProductsArray =
+//       product.count === 1
+//         ? products.filter((it) => it.id !== product.id)
+//         : products.map((obj) => {
+//             if (obj.id === product.id) {
+//               const decrease = +obj.count - 1
+//               const updatedPrice = +obj.totalCurrencyPrice - +obj.priceCurrency
+//               const updatedPriceFixed = updatedPrice.toFixed(2)
+//               return { ...obj, count: decrease, totalCurrencyPrice: updatedPriceFixed }
+//             }
+//             return obj
+//           })
+
+//     const totalBasketSum = sum - +product.priceCurrency
+//     const totalBasketSumFixed = totalBasketSum.toFixed(2)
+
+//     dispatch({
+//       type: REMOVE_FROM_BASKET,
+//       productTitle: product.title,
+//       removeProduct: updatedProductsArray,
+//       updatedSum: totalBasketSumFixed,
+//       decOrder: newOrder
+//     })
+//   }
+// }
+
+export function removeFromBusketObj(product) {
   return (dispatch, getStore) => {
     const store = getStore()
     const { products, sum, order } = store.goods
-    const newOrder = order - 1
-
-    const updatedProductsArray =
-      product.count === 1
-        ? products.filter((it) => it.id !== product.id)
-        : products.map((obj) => {
-            if (obj.id === product.id) {
-              const decrease = +obj.count - 1
-              const updatedPrice = +obj.totalCurrencyPrice - +obj.priceCurrency
-              const updatedPriceFixed = updatedPrice.toFixed(2)
-              return { ...obj, count: decrease, totalCurrencyPrice: updatedPriceFixed }
-            }
-            return obj
-          })
-
-    const totalBasketSum = sum - +product.priceCurrency
+    const newOrder = +order - 1
+    const totalBasketSum = +sum - +product.priceCurrency
     const totalBasketSumFixed = totalBasketSum.toFixed(2)
 
-    dispatch({
+    if (product.count === 1) {
+      const updatedProducts = products
+      delete updatedProducts[product.id]
+      return dispatch({
+        type: REMOVE_FROM_BASKET,
+        removeProduct: updatedProducts,
+        updatedSum: totalBasketSumFixed,
+        decOrder: newOrder
+      })
+    }
+
+    const updatedProducts = {
+      ...products,
+      [product.id]: {
+        ...product,
+        count: +[product.count] - 1,
+        totalCurrencyPrice: (+product.totalCurrencyPrice - +product.priceCurrency).toFixed(2)
+      }
+    }
+
+    return dispatch({
       type: REMOVE_FROM_BASKET,
-      productTitle: product.title,
-      removeProduct: updatedProductsArray,
-      decOrder: newOrder,
-      updatedSum: totalBasketSumFixed
+      removeProduct: updatedProducts,
+      updatedSum: totalBasketSumFixed,
+      decOrder: newOrder
     })
   }
 }

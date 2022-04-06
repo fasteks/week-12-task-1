@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import {
-  changeCurrency,
+  changeCurrencyObj,
   sortCardsServer,
   sortGoodsServer,
   USD_CURRENCY,
@@ -18,6 +18,8 @@ const Header = (props) => {
   const { sum } = useSelector((s) => s.goods)
   const { order } = useSelector((s) => s.goods)
   const { products } = useSelector((s) => s.goods)
+  const [isClickedPrice, setClickPrice] = useState(true)
+  const [isClickedName, setClickName] = useState(false)
   const isUrl = props.title === MARKET
   return (
     <div className="flex flex-wrap justify-evenly items-center p-2 box-border text-lg font-semibold text-white bg-teal-600">
@@ -33,7 +35,7 @@ const Header = (props) => {
           type="button"
           className="mx-1 p-1 hover:rounded-md hover:bg-lime-500 hover:scale-110 focus:rounded-md focus:bg-white focus:text-teal-800"
           onClick={() => {
-            dispatch(changeCurrency(USD_CURRENCY))
+            dispatch(changeCurrencyObj(USD_CURRENCY))
           }}
         >
           USD
@@ -43,7 +45,7 @@ const Header = (props) => {
           type="button"
           className="mx-1 p-1 hover:rounded-md hover:bg-lime-500 hover:scale-110 focus:rounded-md focus:bg-white focus:text-teal-800"
           onClick={() => {
-            dispatch(changeCurrency(EUR_CURRENCY))
+            dispatch(changeCurrencyObj(EUR_CURRENCY))
           }}
         >
           EUR
@@ -53,7 +55,7 @@ const Header = (props) => {
           type="button"
           className="mx-1 p-1 hover:rounded-md hover:bg-lime-500 hover:scale-110 focus:rounded-md focus:bg-white focus:text-teal-800"
           onClick={() => {
-            dispatch(changeCurrency(CAD_CURRENCY))
+            dispatch(changeCurrencyObj(CAD_CURRENCY))
           }}
         >
           CAD
@@ -66,9 +68,14 @@ const Header = (props) => {
           id="sort-price"
           className="mx-1 ml-2 p-1 hover:rounded-md hover:bg-lime-500 hover:scale-110 focus:rounded-md focus:bg-white focus:text-teal-800"
           onClick={() => {
-            dispatch(sortCardsServer(SORT_BY_PRICE))
-            if (products.length !== 0) {
-              dispatch(sortGoodsServer(SORT_BY_PRICE))
+            if (isClickedPrice) {
+              setClickPrice(!isClickedPrice)
+              setClickName(!isClickedName)
+
+              dispatch(sortCardsServer(SORT_BY_PRICE))
+              if (Object.keys(products).length !== 0) {
+                dispatch(sortGoodsServer(SORT_BY_PRICE))
+              }
             }
           }}
         >
@@ -80,9 +87,14 @@ const Header = (props) => {
           id="sort-name"
           className="mx-1 p-1 hover:rounded-md hover:bg-lime-500 hover:scale-110 focus:rounded-md focus:bg-white focus:text-teal-800"
           onClick={() => {
-            dispatch(sortCardsServer(SORT_BY_NAME))
-            if (products.length !== 0) {
-              dispatch(sortGoodsServer(SORT_BY_NAME))
+            if (isClickedName) {
+              setClickName(!isClickedName)
+              setClickPrice(!isClickedPrice)
+
+              dispatch(sortCardsServer(SORT_BY_NAME))
+              if (Object.keys(products).length !== 0) {
+                dispatch(sortGoodsServer(SORT_BY_NAME))
+              }
             }
           }}
         >

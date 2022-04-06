@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import { removeFromBusket } from '../redux/reducers/goods'
+import { removeFromBusketObj } from '../redux/reducers/goods'
 
 const Product = (props) => {
   const dispatch = useDispatch()
@@ -17,7 +17,7 @@ const Product = (props) => {
         type="button"
         className="product__remove w-full p-1 mt-1 rounded-md bg-rose-500 text-white"
         onClick={() => {
-          dispatch(removeFromBusket(product))
+          dispatch(removeFromBusketObj(product))
         }}
       >
         Delete Product

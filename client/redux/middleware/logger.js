@@ -24,7 +24,7 @@ const Logger = () => {
             .then(({ data }) => {
               dispatch({ type: POST_LOGS, payload: data })
             })
-            .catch((e) => console.log(e))
+            .catch((error) => error)
         }
         switch (action.type) {
           case CHANGE_CURRENCY: {
