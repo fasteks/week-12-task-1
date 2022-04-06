@@ -2,22 +2,29 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-// import { changeCurrency, sortCards, sortGoods, sortCardsServer } from '../redux/reducers/goods'
-// import { changeCurrency, sortGoods, sortCardsServer, sortGoodsServer } from '../redux/reducers/goods'
-import { changeCurrency, sortCardsServer, sortGoodsServer } from '../redux/reducers/goods'
+import {
+  changeCurrency,
+  sortCardsServer,
+  sortGoodsServer,
+  USD_CURRENCY,
+  EUR_CURRENCY,
+  CAD_CURRENCY
+} from '../redux/reducers/goods'
+import { SORT_BY_NAME, SORT_BY_PRICE } from '../../server/common/index'
+import { MARKET } from './main'
 
 const Header = (props) => {
   const dispatch = useDispatch()
   const { sum } = useSelector((s) => s.goods)
   const { order } = useSelector((s) => s.goods)
   const { products } = useSelector((s) => s.goods)
-  const isUrl = props.title === 'Market'
+  const isUrl = props.title === MARKET
   return (
     <div className="flex flex-wrap justify-evenly items-center p-2 box-border text-lg font-semibold text-white bg-teal-600">
       {isUrl ? (
         <p className="">Green Market</p>
       ) : (
-        <Link to="/" id="brand-name" className="">
+        <Link to="/" id="brand-name">
           Green Market
         </Link>
       )}
@@ -26,7 +33,7 @@ const Header = (props) => {
           type="button"
           className="mx-1 p-1 hover:rounded-md hover:bg-lime-500 hover:scale-110 focus:rounded-md focus:bg-white focus:text-teal-800"
           onClick={() => {
-            dispatch(changeCurrency('USD'))
+            dispatch(changeCurrency(USD_CURRENCY))
           }}
         >
           USD
@@ -36,7 +43,7 @@ const Header = (props) => {
           type="button"
           className="mx-1 p-1 hover:rounded-md hover:bg-lime-500 hover:scale-110 focus:rounded-md focus:bg-white focus:text-teal-800"
           onClick={() => {
-            dispatch(changeCurrency('EUR'))
+            dispatch(changeCurrency(EUR_CURRENCY))
           }}
         >
           EUR
@@ -46,7 +53,7 @@ const Header = (props) => {
           type="button"
           className="mx-1 p-1 hover:rounded-md hover:bg-lime-500 hover:scale-110 focus:rounded-md focus:bg-white focus:text-teal-800"
           onClick={() => {
-            dispatch(changeCurrency('CAD'))
+            dispatch(changeCurrency(CAD_CURRENCY))
           }}
         >
           CAD
@@ -59,11 +66,9 @@ const Header = (props) => {
           id="sort-price"
           className="mx-1 ml-2 p-1 hover:rounded-md hover:bg-lime-500 hover:scale-110 focus:rounded-md focus:bg-white focus:text-teal-800"
           onClick={() => {
-            // dispatch(sortGoods('price'))
-            // dispatch(sortCards('price'))
-            dispatch(sortCardsServer('price'))
+            dispatch(sortCardsServer(SORT_BY_PRICE))
             if (products.length !== 0) {
-              dispatch(sortGoodsServer('price'))
+              dispatch(sortGoodsServer(SORT_BY_PRICE))
             }
           }}
         >
@@ -75,11 +80,9 @@ const Header = (props) => {
           id="sort-name"
           className="mx-1 p-1 hover:rounded-md hover:bg-lime-500 hover:scale-110 focus:rounded-md focus:bg-white focus:text-teal-800"
           onClick={() => {
-            // dispatch(sortGoods('name'))
-            // dispatch(sortCards('name'))
-            dispatch(sortCardsServer('name'))
+            dispatch(sortCardsServer(SORT_BY_NAME))
             if (products.length !== 0) {
-              dispatch(sortGoodsServer('name'))
+              dispatch(sortGoodsServer(SORT_BY_NAME))
             }
           }}
         >
@@ -118,7 +121,8 @@ const Header = (props) => {
       )}
       <p className="flex flex-col items-center">
         <span>Total cost:</span>
-        <span>{sum}</span></p>
+        <span>{sum}</span>
+      </p>
     </div>
   )
 }

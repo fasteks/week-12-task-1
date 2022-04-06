@@ -3,11 +3,13 @@ import { useSelector } from 'react-redux'
 import Header from './header'
 import Products from './products'
 
+export const BASKET = 'Basket'
+
 const Basket = () => {
   const currentSum = useSelector((s) => s.goods.sum)
   return (
     <div className="flex flex-col min-h-screen bg-green-100">
-      <Header title="Basket" />
+      <Header title={BASKET} />
       <Products />
       <p
         id="total-amount"

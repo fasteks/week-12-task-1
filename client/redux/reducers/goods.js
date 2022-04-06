@@ -1,5 +1,4 @@
 import axios from 'axios'
-// import { addToBasketLog, removeFromBasketLog, sortByLog, currencyLog } from './logs'
 
 const GET_CARDS = 'market/goods/GET_CARDS'
 const GET_RATES = 'market/goods/GET_RATES'
@@ -8,7 +7,9 @@ export const REMOVE_FROM_BASKET = 'market/goods/REMOVE_FROM_BASKET'
 export const CHANGE_CURRENCY = 'market/goods/CHANGE_CURRENCY'
 export const SORT_GOODS = 'market/goods/SORT_GOODS'
 export const SORT_CARDS = 'market/goods/SORT_CARDS'
-const USD_CURRENCY = 'USD'
+export const USD_CURRENCY = 'USD'
+export const EUR_CURRENCY = 'EUR'
+export const CAD_CURRENCY = 'CAD'
 
 const initialState = {
   cards: [],
@@ -104,33 +105,6 @@ export function getRates() {
   }
 }
 
-// export function sortCards(by) {
-//   return (dispatch, getStore) => {
-//     const store = getStore()
-//     const { cards } = store.goods
-//     if (by === 'name') {
-//       const cardsSortedByName = cards.sort((a, b) => {
-//         return a.title.localeCompare(b.title)
-//       })
-//       // dispatch(sortByLog(by))
-//       dispatch({
-//         type: SORT_CARDS,
-//         sortedCards: cardsSortedByName
-//       })
-//     }
-//     if (by === 'price') {
-//       const cardsSortedByPrice = cards.sort((a, b) => {
-//         return b.priceCurrency - a.priceCurrency
-//       })
-//       // dispatch(sortByLog(by))
-//       dispatch({
-//         type: SORT_CARDS,
-//         sortedCards: cardsSortedByPrice
-//       })
-//     }
-//   }
-// }
-
 export function sortCardsServer(by) {
   return async (dispatch, useState) => {
     const { rates, currency, cards } = useState().goods
@@ -153,33 +127,6 @@ export function sortCardsServer(by) {
       })
   }
 }
-
-// export function sortGoods(by) {
-//   return (dispatch, getStore) => {
-//     const store = getStore()
-//     const { products } = store.goods
-//     if (products.length > 0 && by === 'name') {
-//       const productsSortedByName = products.sort((a, b) => {
-//         return a.title.localeCompare(b.title)
-//       })
-//       // dispatch(sortByLog(by))
-//       dispatch({
-//         type: SORT_GOODS,
-//         sortedGoods: productsSortedByName
-//       })
-//     }
-//     if (products.length > 0 && by === 'price') {
-//       const productsSortedByPrice = products.sort((a, b) => {
-//         return b.priceCurrency - a.priceCurrency
-//       })
-//       // dispatch(sortByLog(by))
-//       dispatch({
-//         type: SORT_GOODS,
-//         sortedGoods: productsSortedByPrice
-//       })
-//     }
-//   }
-// }
 
 export function sortGoodsServer(by) {
   return async (dispatch, useState) => {
@@ -227,7 +174,6 @@ export function changeCurrency(curr) {
       }, 0)
       const totalBasketSumFixed = totalBasketSum.toFixed(2)
 
-      // dispatch(currencyLog(currency, curr))
       dispatch({
         type: CHANGE_CURRENCY,
         curren: curr,
@@ -254,7 +200,7 @@ export function addToBasket(card) {
         return acc + +rec.totalCurrencyPrice
       }, 0)
       const totalBasketSumFixed = totalBasketSum.toFixed(2)
-      // dispatch(addToBasketLog(card.title))
+
       dispatch({
         type: ADD_TO_BASKET,
         cardTitle: card.title,
@@ -282,7 +228,6 @@ export function addToBasket(card) {
       }, 0)
       const totalBasketSumFixed = totalBasketSum.toFixed(2)
 
-      // dispatch(addToBasketLog(card.title))
       dispatch({
         type: ADD_TO_BASKET,
         cardTitle: card.title,
@@ -316,7 +261,6 @@ export function removeFromBusket(product) {
     const totalBasketSum = sum - +product.priceCurrency
     const totalBasketSumFixed = totalBasketSum.toFixed(2)
 
-    // dispatch(removeFromBasketLog(product.title))
     dispatch({
       type: REMOVE_FROM_BASKET,
       productTitle: product.title,
