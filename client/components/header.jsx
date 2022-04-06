@@ -10,13 +10,14 @@ const Header = (props) => {
   const dispatch = useDispatch()
   const { sum } = useSelector((s) => s.goods)
   const { order } = useSelector((s) => s.goods)
+  const { products } = useSelector((s) => s.goods)
   const isUrl = props.title === 'Market'
   return (
-    <div className="flex justify-evenly items-center h-16 p-2 box-border text-lg font-semibold text-white bg-teal-600">
+    <div className="flex flex-wrap justify-evenly items-center p-2 box-border text-lg font-semibold text-white bg-teal-600">
       {isUrl ? (
-        <p className="flex justify-end w-44">Green Market</p>
+        <p className="">Green Market</p>
       ) : (
-          <Link to="/" id="brand-name" className="flex justify-end w-44">
+        <Link to="/" id="brand-name" className="">
           Green Market
         </Link>
       )}
@@ -61,7 +62,9 @@ const Header = (props) => {
             // dispatch(sortGoods('price'))
             // dispatch(sortCards('price'))
             dispatch(sortCardsServer('price'))
-            dispatch(sortGoodsServer('price'))
+            if (products.length !== 0) {
+              dispatch(sortGoodsServer('price'))
+            }
           }}
         >
           Price
@@ -75,7 +78,9 @@ const Header = (props) => {
             // dispatch(sortGoods('name'))
             // dispatch(sortCards('name'))
             dispatch(sortCardsServer('name'))
-            dispatch(sortGoodsServer('name'))
+            if (products.length !== 0) {
+              dispatch(sortGoodsServer('name'))
+            }
           }}
         >
           Name
@@ -97,7 +102,7 @@ const Header = (props) => {
         <Link
           to="/basket"
           id="order-count"
-            className="flex items-start justify-evenly items-center w-40 group"
+          className="flex items-start justify-evenly items-center w-40 group"
         >
           <p className="flex flex-col items-center">
             <span>Order:</span>
@@ -106,12 +111,14 @@ const Header = (props) => {
               style={{ fontSize: '28px' }}
             />
           </p>
-            <p className="self-start w-7 -ml-1 text-lg text-yellow-300 group-hover:translate-y-5 ease-in duration-200">
+          <p className="self-start w-7 -ml-1 text-lg text-yellow-300 group-hover:translate-y-5 ease-in duration-200">
             {order}
           </p>
         </Link>
       )}
-      <p className="w-40">Total cost: {sum}</p>
+      <p className="flex flex-col items-center">
+        <span>Total cost:</span>
+        <span>{sum}</span></p>
     </div>
   )
 }
