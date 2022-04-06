@@ -24,7 +24,7 @@ const Main = () => {
   }, [])
 
   return (
-    <div className="flex flex-col bg-green-100">
+    <div className="flex flex-col h-full bg-green-100">
       <Header title="Market" />
       {/* <Cards /> */}
       <Table />
