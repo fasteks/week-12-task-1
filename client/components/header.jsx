@@ -14,9 +14,9 @@ const Header = (props) => {
   return (
     <div className="flex justify-evenly items-center h-16 p-2 box-border text-lg font-semibold text-white bg-teal-600">
       {isUrl ? (
-        <p>Green Market</p>
+        <p className="flex justify-end w-44">Green Market</p>
       ) : (
-        <Link to="/" id="brand-name">
+          <Link to="/" id="brand-name" className="flex justify-end w-44">
           Green Market
         </Link>
       )}
