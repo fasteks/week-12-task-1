@@ -112,7 +112,8 @@ server.post('/api/v1/logs', async (req, res) => {
 
 server.delete('/api/v1/logs', async (req, res) => {
   await unlink(`${__dirname}/data/logs.json`)
-  res.json({ status: 'Deleted' })
+  // res.json({ status: 'Deleted' })
+  res.end()
 })
 
 server.post('/api/v1/sort', async (req, res) => {
