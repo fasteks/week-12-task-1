@@ -3,12 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { SORT_BY_NAME, SORT_BY_PRICE } from '../../../server/common/index'
+import { SORT_CARDS, sortByServer } from '../../redux/reducers/cards'
+import { sortGoodsServer } from '../../redux/reducers/goods'
 import { MARKET } from '../main/main'
 import {
   changeCurrencyObj,
-  sortByServer,
-  sortGoodsServer,
-  SORT_CARDS,
   USD_CURRENCY,
   EUR_CURRENCY,
   CAD_CURRENCY

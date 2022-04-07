@@ -1,5 +1,9 @@
+import axios from 'axios'
+
+export const UPDATE_PRODUCTS = 'market/settings/UPDATE_PRODUCTS'
 export const ADD_TO_BASKET = 'market/goods/ADD_TO_BASKET'
 export const REMOVE_FROM_BASKET = 'market/goods/REMOVE_FROM_BASKET'
+export const SORT_GOODS = 'market/settings/SORT_GOODS'
 
 const initialState = {
   products: {},
@@ -9,6 +13,13 @@ const initialState = {
 
 export default (state = initialState, action = {}) => {
   switch (action.type) {
+    case UPDATE_PRODUCTS: {
+      return {
+        ...state,
+        products: action.updatedProducts,
+        sum: action.totalSum
+      }
+    }
     case ADD_TO_BASKET: {
       return {
         ...state,
@@ -23,6 +34,12 @@ export default (state = initialState, action = {}) => {
         products: action.removeProduct,
         sum: action.updatedSum,
         order: action.decOrder
+      }
+    }
+    case SORT_GOODS: {
+      return {
+        ...state,
+        products: action.sortedGoods
       }
     }
     default:
@@ -45,6 +62,7 @@ export function addToBasketObj(card) {
       }
       return dispatch({
         type: ADD_TO_BASKET,
+        cardTitle: card.title,
         updateProducts: updatedProducts,
         updatedSum: totalBasketSumFixed,
         addOrder: newOrder
@@ -65,7 +83,8 @@ export function addToBasketObj(card) {
       type: ADD_TO_BASKET,
       updateProducts: updatedProducts,
       updatedSum: totalBasketSumFixed,
-      addOrder: newOrder
+      addOrder: newOrder,
+      cardTitle: card.title
     })
   }
 }
@@ -85,7 +104,8 @@ export function removeFromBusketObj(product) {
         type: REMOVE_FROM_BASKET,
         removeProduct: updatedProducts,
         updatedSum: totalBasketSumFixed,
-        decOrder: newOrder
+        decOrder: newOrder,
+        productTitle: product.title
       })
     }
 
@@ -102,7 +122,27 @@ export function removeFromBusketObj(product) {
       type: REMOVE_FROM_BASKET,
       removeProduct: updatedProducts,
       updatedSum: totalBasketSumFixed,
-      decOrder: newOrder
+      decOrder: newOrder,
+      productTitle: product.title
     })
+  }
+}
+
+export function sortGoodsServer(by) {
+  return async (dispatch, getStore) => {
+    const { products } = getStore().goods
+    await axios({
+      method: 'post',
+      url: 'api/v1/sort',
+      data: {
+        obj: products,
+        action: by
+      }
+    })
+      .then(({ data }) => data)
+      .then((sortedArray) => {
+        dispatch({ type: SORT_GOODS, sortedGoods: sortedArray, sort: by })
+      })
+      .catch((error) => error)
   }
 }

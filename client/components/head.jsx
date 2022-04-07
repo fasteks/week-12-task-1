@@ -1,10 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Helmet } from 'react-helmet'
+import { MARKET } from './main/main'
+import { BASKET } from './basket/basket'
 
 const Head = (props) => (
   <Helmet>
-    <title>Market - {props.title}</title>
+    <title>Market - {props.title === '/' ? MARKET : BASKET}</title>
     <meta charSet="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#FF0000" />

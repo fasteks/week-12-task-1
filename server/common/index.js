@@ -1,4 +1,4 @@
-import { SORT_CARDS } from '../../client/redux/reducers/settings'
+import { SORT_CARDS } from '../../client/redux/reducers/cards'
 
 export const SORT_BY_NAME = 'name'
 export const SORT_BY_PRICE = 'price'

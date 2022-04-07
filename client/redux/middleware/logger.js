@@ -3,7 +3,8 @@ import { LOCATION_CHANGE } from 'connected-react-router'
 
 import { POST_LOGS } from '../reducers/logs'
 import { ADD_TO_BASKET, REMOVE_FROM_BASKET } from '../reducers/goods'
-import { CHANGE_CURRENCY, SORT_CARDS } from '../reducers/settings'
+import { CHANGE_CURRENCY } from '../reducers/settings'
+import { SORT_CARDS } from '../reducers/cards'
 
 const Logger = () => {
   return (store) => {
@@ -29,7 +30,7 @@ const Logger = () => {
         }
         switch (action.type) {
           case CHANGE_CURRENCY: {
-            const { currency } = getState().goods
+            const { currency } = getState().settings
             postLog(`${formattedDate()} - change currency from ${currency} to ${action.curren}`)
             break
           }

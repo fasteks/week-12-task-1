@@ -1,8 +1,8 @@
 import axios from 'axios'
+import { UPDATE_CARDS } from './cards'
+import { UPDATE_PRODUCTS } from './goods'
 
 export const GET_RATES = 'market/settings/GET_RATES'
-export const SORT_GOODS = 'market/settings/SORT_GOODS'
-export const SORT_CARDS = 'market/settings/SORT_CARDS'
 export const CHANGE_CURRENCY = 'market/settings/CHANGE_CURRENCY'
 export const USD_CURRENCY = 'USD'
 export const EUR_CURRENCY = 'EUR'
@@ -26,22 +26,7 @@ export default (state = initialState, action = {}) => {
     case CHANGE_CURRENCY: {
       return {
         ...state,
-        currency: action.curren,
-        sum: action.totalSum,
-        products: action.updatedProducts,
-        cards: action.updatedCards
-      }
-    }
-    case SORT_GOODS: {
-      return {
-        ...state,
-        products: action.sortedGoods
-      }
-    }
-    case SORT_CARDS: {
-      return {
-        ...state,
-        cards: action.sortedCards
+        currency: action.curren
       }
     }
     default:
@@ -62,57 +47,12 @@ export function getRates() {
   }
 }
 
-export function sortGoodsServer(by) {
-  return async (dispatch, getStore) => {
-    const { products } = getStore().goods
-    await axios({
-      method: 'post',
-      url: 'api/v1/sort',
-      data: {
-        obj: products,
-        action: by
-      }
-    })
-      .then(({ data }) => data)
-      .then((sortedArray) => {
-        dispatch({ type: SORT_GOODS, sortedGoods: sortedArray, sort: by })
-      })
-      .catch((error) => error)
-  }
-}
-
-export function sortByServer(obj, by) {
-  return async (dispatch, getStore) => {
-    await axios({
-      method: 'post',
-      url: 'api/v1/sortByServer',
-      data: {
-        obj,
-        by
-      }
-    })
-      .then(({ data }) => data)
-      .then((sortedArray) => {
-        if (obj === SORT_CARDS) {
-          const { rates, currency } = getStore().goods
-          const cardsArray = sortedArray.map((it) => {
-            const currenciedPrice = +it.price * +rates[currency]
-            const currenciedPriceFixed = currenciedPrice.toFixed(2)
-            return { ...it, priceCurrency: currenciedPriceFixed }
-          })
-          return dispatch({ type: obj, sortedCards: cardsArray })
-        }
-
-        return dispatch({ type: obj, sortedGoods: sortedArray })
-      })
-      .catch((error) => error)
-  }
-}
-
 export function changeCurrencyObj(curr) {
   return (dispatch, getState) => {
     const state = getState()
-    const { products, rates, currency, cards } = state.goods
+    const { products } = state.goods
+    const { rates, currency } = state.settings
+    const { cards } = state.cards
     if (curr !== currency) {
       const cardsArray = cards.map((it) => {
         const currenciedPrice = +it.price * +rates[curr]
@@ -141,10 +81,10 @@ export function changeCurrencyObj(curr) {
       }, 0)
       const totalBasketSumFixed = totalBasketSum.toFixed(2)
 
+      dispatch({ type: CHANGE_CURRENCY, curren: curr })
+      dispatch({ type: UPDATE_CARDS, payload: cardsArray })
       dispatch({
-        type: CHANGE_CURRENCY,
-        curren: curr,
-        updatedCards: cardsArray,
+        type: UPDATE_PRODUCTS,
         updatedProducts: productsObj,
         totalSum: totalBasketSumFixed
       })

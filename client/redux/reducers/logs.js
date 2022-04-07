@@ -1,4 +1,4 @@
-export const POST_LOGS = 'market/goods/POST_LOGS'
+export const POST_LOGS = 'market/logs/POST_LOGS'
 
 const initialState = {
   logsList: []
