@@ -10,7 +10,7 @@ import axios from 'axios'
 import config from './config'
 import Html from '../client/html'
 
-import sortDataArray from './common'
+import { sortDataArray, sortGoodsByServer } from './common/index'
 
 const { readFile, writeFile, unlink } = require('fs').promises
 
@@ -118,6 +118,14 @@ server.post('/api/v1/sort', async (req, res) => {
   // await writeFile(`${__dirname}/data/goods.json`, JSON.stringify(sortedProductsArray), 'utf-8')
   // res.json(sortedProductsArray.slice(0, 50))
   res.json(sortedProductsArray)
+})
+
+server.post('/api/v1/sortByServer', async (req, res) => {
+  const goods = await getGoods()
+  const { obj, by } = req.body
+  const sortedGoods = await sortGoodsByServer(goods, obj, by)
+  await writeFile(`${__dirname}/data/goods.json`, JSON.stringify(sortedGoods), 'utf-8')
+  res.json(sortedGoods.slice(0, 50))
 })
 
 server.use('/api/', (req, res) => {

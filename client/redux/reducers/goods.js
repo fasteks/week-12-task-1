@@ -109,34 +109,34 @@ export function getRates() {
   }
 }
 
-export function sortCardsServer(by) {
-  return async (dispatch, useState) => {
-    const { rates, currency, cards } = useState().goods
-    await axios({
-      method: 'post',
-      url: 'api/v1/sort',
-      data: {
-        obj: cards,
-        action: by
-      }
-    })
-      .then(({ data }) => data)
-      .then((sortedArray) => {
-        const cardsArray = sortedArray.map((it) => {
-          const currenciedPrice = +it.price * +rates[currency]
-          const currenciedPriceFixed = currenciedPrice.toFixed(2)
-          return { ...it, priceCurrency: currenciedPriceFixed }
-        })
+// export function sortCardsServer(by) {
+//   return async (dispatch, getStore) => {
+//     const { rates, currency, cards } = getStore().goods
+//     await axios({
+//       method: 'post',
+//       url: 'api/v1/sort',
+//       data: {
+//         obj: cards,
+//         action: by
+//       }
+//     })
+//       .then(({ data }) => data)
+//       .then((sortedArray) => {
+//         const cardsArray = sortedArray.map((it) => {
+//           const currenciedPrice = +it.price * +rates[currency]
+//           const currenciedPriceFixed = currenciedPrice.toFixed(2)
+//           return { ...it, priceCurrency: currenciedPriceFixed }
+//         })
 
-        dispatch({ type: SORT_CARDS, sortedCards: cardsArray, sort: by })
-      })
-      .catch((error) => error)
-  }
-}
+//         dispatch({ type: SORT_CARDS, sortedCards: cardsArray, sort: by })
+//       })
+//       .catch((error) => error)
+//   }
+// }
 
 export function sortGoodsServer(by) {
-  return async (dispatch, useState) => {
-    const { products } = useState().goods
+  return async (dispatch, getStore) => {
+    const { products } = getStore().goods
     await axios({
       method: 'post',
       url: 'api/v1/sort',
@@ -148,6 +148,34 @@ export function sortGoodsServer(by) {
       .then(({ data }) => data)
       .then((sortedArray) => {
         dispatch({ type: SORT_GOODS, sortedGoods: sortedArray, sort: by })
+      })
+      .catch((error) => error)
+  }
+}
+
+export function sortByServer(obj, by) {
+  return async (dispatch, getStore) => {
+    await axios({
+      method: 'post',
+      url: 'api/v1/sortByServer',
+      data: {
+        obj,
+        by
+      }
+    })
+      .then(({ data }) => data)
+      .then((sortedArray) => {
+        if (obj === SORT_CARDS) {
+          const { rates, currency } = getStore().goods
+          const cardsArray = sortedArray.map((it) => {
+            const currenciedPrice = +it.price * +rates[currency]
+            const currenciedPriceFixed = currenciedPrice.toFixed(2)
+            return { ...it, priceCurrency: currenciedPriceFixed }
+          })
+          return dispatch({ type: obj, sortedCards: cardsArray })
+        }
+
+        return dispatch({ type: obj, sortedGoods: sortedArray })
       })
       .catch((error) => error)
   }

@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom'
 
 import {
   changeCurrencyObj,
-  sortCardsServer,
   sortGoodsServer,
+  sortByServer,
+  SORT_CARDS,
   USD_CURRENCY,
   EUR_CURRENCY,
   CAD_CURRENCY
@@ -71,7 +72,8 @@ const Header = (props) => {
             if (isClickedPrice) {
               setClickPrice(!isClickedPrice)
 
-              dispatch(sortCardsServer(SORT_BY_PRICE))
+              // dispatch(sortCardsServer(SORT_BY_PRICE))
+              dispatch(sortByServer(SORT_CARDS, SORT_BY_PRICE))
               if (Object.keys(products).length !== 0) {
                 dispatch(sortGoodsServer(SORT_BY_PRICE))
               }
@@ -92,7 +94,8 @@ const Header = (props) => {
             if (isClickedName) {
               setClickName(!isClickedName)
 
-              dispatch(sortCardsServer(SORT_BY_NAME))
+              // dispatch(sortCardsServer(SORT_BY_NAME))
+              dispatch(sortByServer(SORT_CARDS, SORT_BY_NAME))
               if (Object.keys(products).length !== 0) {
                 dispatch(sortGoodsServer(SORT_BY_NAME))
               }
