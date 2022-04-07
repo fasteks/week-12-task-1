@@ -8,9 +8,11 @@ export const BASKET = 'Basket'
 const Basket = () => {
   const currentSum = useSelector((s) => s.goods.sum)
   return (
-    <div className="flex flex-col min-h-screen bg-green-100">
+    <div className="flex flex-col justify-between min-h-screen bg-green-100">
       <Header title={BASKET} />
-      <Products />
+      <div className="flex flex-col items-center">
+        <Products />
+      </div>
       <p
         id="total-amount"
         className="flex justify-center p-5 box-border text-lg text-white font-semibold bg-teal-600"

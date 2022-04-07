@@ -9,12 +9,12 @@ const TableRow = (props) => {
   const { products } = useSelector((s) => s.goods)
   const currentCurrency = useSelector((s) => s.goods.currency)
   return (
-    <tr className="card flex flex-col items-center justify-between p-2 m-2 bg-yellow-100 border-2 rounded-lg border-lime-600">
+    <tr className="card flex flex-col items-center justify-between w-60 p-5 m-2 my-5 bg-yellow-200 border-2 rounded-lg border-lime-600">
       <td>
         <img className="card__image" src={card.image} alt={card.description} />
       </td>
       <td>
-        <p className="card__title text-center font-bold">{card.title}</p>
+        <p className="card__title h-12 text-center font-bold">{card.title}</p>
       </td>
       <td>
         <p className="card__price">
@@ -29,7 +29,7 @@ const TableRow = (props) => {
       <td>
         <button
           type="button"
-          className="p-1 mt-1 rounded-md bg-rose-500 text-white"
+          className="p-1 rounded-md bg-rose-500 text-white"
           onClick={() => {
             dispatch(addToBasketObj(card))
           }}

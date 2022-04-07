@@ -48,7 +48,11 @@ const getGoods = () => {
       const { data: goodsData } = await axios(
         'https://raw.githubusercontent.com/ovasylenko/skillcrcuial-ecommerce-test-data/master/data.json'
       ).catch((error) => error)
-      const slicedGoodsData = goodsData.slice(0, 50)
+      const setNewImageSrc = goodsData.map((it) => ({
+        ...it,
+        image: 'https://icons.iconarchive.com/icons/fi3ur/fruitsalad/128/lime-icon.png'
+      }))
+      const slicedGoodsData = setNewImageSrc.slice(0, 50)
       await writeFile(`${__dirname}/data/goods.json`, JSON.stringify(slicedGoodsData), 'utf-8')
       return slicedGoodsData
     })
@@ -112,11 +116,8 @@ server.delete('/api/v1/logs', async (req, res) => {
 })
 
 server.post('/api/v1/sort', async (req, res) => {
-  // const arrayOfProducts = await getProductsFunc()
   const { obj, action } = req.body
   const sortedProductsArray = await sortDataArray(obj, action)
-  // await writeFile(`${__dirname}/data/goods.json`, JSON.stringify(sortedProductsArray), 'utf-8')
-  // res.json(sortedProductsArray.slice(0, 50))
   res.json(sortedProductsArray)
 })
 

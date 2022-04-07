@@ -7,8 +7,8 @@ const Table = () => {
   const cardsArray = useSelector((s) => s.goods.cards)
 
   return (
-    <table>
-      <tbody className="flex flex-wrap justify-evenly">
+    <table className="m-5">
+      <tbody className="flex flex-wrap justify-center bg-teal-200 rounded-3xl bg-clip-content">
         {cardsArray.map((currentCard) => (
           <TableRow key={currentCard.id} card={currentCard} />
         ))}

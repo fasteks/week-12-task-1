@@ -24,10 +24,12 @@ const Main = () => {
   }, [])
 
   return (
-    <div className="flex flex-col h-full bg-green-100">
+    <>
       <Header title={MARKET} />
-      <Table />
-    </div>
+      <div className="flex flex-col items-center h-full bg-green-100">
+        <Table />
+      </div>
+    </>
   )
 }
 
