@@ -6,7 +6,7 @@ import Products from './products'
 export const BASKET = 'Basket'
 
 const Basket = () => {
-  const currentSum = useSelector((s) => s.goods.sum)
+  const { sum } = useSelector((s) => s.goods)
   return (
     <div className="flex flex-col justify-between min-h-screen bg-green-100">
       <Header title={BASKET} />
@@ -17,7 +17,7 @@ const Basket = () => {
         id="total-amount"
         className="flex justify-center p-5 box-border text-lg text-white font-semibold bg-teal-600"
       >
-        Total cost: {currentSum}
+        Total cost: {sum}
       </p>
     </div>
   )

@@ -7,7 +7,7 @@ const TableRow = (props) => {
   const { card } = props
   const dispatch = useDispatch()
   const { products } = useSelector((s) => s.goods)
-  const currentCurrency = useSelector((s) => s.goods.currency)
+  const { currency } = useSelector((s) => s.goods)
   return (
     <tr className="card flex flex-col items-center justify-between w-60 p-5 m-2 my-5 bg-yellow-200 border-2 rounded-lg border-lime-600">
       <td>
@@ -18,7 +18,7 @@ const TableRow = (props) => {
       </td>
       <td>
         <p className="card__price">
-          Price: {card.priceCurrency} <span className="currency">{currentCurrency}</span>
+          Price: {card.priceCurrency} <span className="currency">{currency}</span>
         </p>
       </td>
       <td>

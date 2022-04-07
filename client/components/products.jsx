@@ -5,7 +5,7 @@ import Product from './product'
 
 const Products = () => {
   const { products } = useSelector((s) => s.goods)
-  const isProducts = Object.keys(products).length === 0
+  const isProducts = typeof products.length === 'undefined'
   return (
     <div className="flex flex-wrap grow items-center justify-center max-w-screen-xl p-5 m-5 font-semibold text-lg rounded-3xl bg-teal-200">
       {isProducts ? (
