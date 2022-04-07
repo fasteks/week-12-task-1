@@ -2,7 +2,8 @@ import axios from 'axios'
 import { LOCATION_CHANGE } from 'connected-react-router'
 
 import { POST_LOGS } from '../reducers/logs'
-import { CHANGE_CURRENCY, ADD_TO_BASKET, REMOVE_FROM_BASKET, SORT_CARDS } from '../reducers/goods'
+import { ADD_TO_BASKET, REMOVE_FROM_BASKET } from '../reducers/goods'
+import { CHANGE_CURRENCY, SORT_CARDS } from '../reducers/settings'
 
 const Logger = () => {
   return (store) => {

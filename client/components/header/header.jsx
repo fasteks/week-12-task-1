@@ -2,26 +2,26 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
+import { SORT_BY_NAME, SORT_BY_PRICE } from '../../../server/common/index'
+import { MARKET } from '../main/main'
 import {
   changeCurrencyObj,
-  sortGoodsServer,
   sortByServer,
+  sortGoodsServer,
   SORT_CARDS,
   USD_CURRENCY,
   EUR_CURRENCY,
   CAD_CURRENCY
-} from '../redux/reducers/goods'
-import { SORT_BY_NAME, SORT_BY_PRICE } from '../../server/common/index'
-import { MARKET } from './main'
+} from '../../redux/reducers/settings'
 
 const Header = (props) => {
   const dispatch = useDispatch()
-  const isUrl = props.title === MARKET
   const { sum } = useSelector((s) => s.goods)
   const { order } = useSelector((s) => s.goods)
   const { products } = useSelector((s) => s.goods)
-  const [isClickedName, setClickName] = useState(true)
   const [isClickedPrice, setClickPrice] = useState(true)
+  const [isClickedName, setClickName] = useState(true)
+  const isUrl = props.title === MARKET
   return (
     <div className="flex flex-wrap justify-evenly items-center p-2 box-border text-lg font-semibold text-white bg-teal-600">
       {isUrl ? (

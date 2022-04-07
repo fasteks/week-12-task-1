@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import Header from './header'
+import Header from '../header/header'
 import Table from './table'
 
-import { getCards, getRates, EUR_CURRENCY } from '../redux/reducers/goods'
+import { getCards } from '../../redux/reducers/cards'
+import { getRates, EUR_CURRENCY } from '../../redux/reducers/settings'
 
 export const MARKET = 'Market'
 
 const Main = () => {
   const dispatch = useDispatch()
-  const { cards } = useSelector((s) => s.goods)
-  const { rates } = useSelector((s) => s.goods)
+  const { cards } = useSelector((s) => s.cards)
+  const { rates } = useSelector((s) => s.settings)
   useEffect(() => {
     if (!rates[EUR_CURRENCY]) {
       dispatch(getRates())
@@ -24,12 +25,12 @@ const Main = () => {
   }, [])
 
   return (
-    <div className="min-h-screen bg-green-100">
+    <>
       <Header title={MARKET} />
-      <div className="flex flex-col items-center h-full">
+      <div className="flex flex-col items-center h-full bg-green-100">
         <Table />
       </div>
-    </div>
+    </>
   )
 }
 

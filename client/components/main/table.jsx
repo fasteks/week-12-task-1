@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import TableRow from './table-row'
 
 const Table = () => {
-  const { cards } = useSelector((s) => s.goods)
+  const { cards } = useSelector((s) => s.cards)
 
   return (
     <table className="m-5">

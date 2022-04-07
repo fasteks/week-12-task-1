@@ -1,15 +1,17 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, useParams } from 'react-router-dom'
 
-import Main from './main'
-import Basket from './basket'
+import Main from './main/main'
+import Basket from './basket/basket'
 
 import Head from './head'
 
-const Home = (props) => {
+const Home = () => {
+  const params = useParams()
+
   return (
-    <div className="min-h-screen">
-      <Head title={props.location.pathname} />
+    <div className="h-screen">
+      <Head title={params[0] === '' ? 'Market' : 'Basket'} />
       <Switch>
         <Route exact path="/" component={Main} />
         <Route exact path="/:basket" component={Basket} />

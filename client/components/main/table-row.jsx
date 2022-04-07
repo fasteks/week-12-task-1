@@ -1,13 +1,13 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { addToBasketObj } from '../redux/reducers/goods'
+import { addToBasketObj } from '../../redux/reducers/goods'
 
 const TableRow = (props) => {
   const { card } = props
   const dispatch = useDispatch()
   const { products } = useSelector((s) => s.goods)
-  const { currency } = useSelector((s) => s.goods)
+  const { currency } = useSelector((s) => s.settings)
   return (
     <tr className="card flex flex-col items-center justify-between w-60 p-5 m-2 my-5 bg-yellow-200 border-2 rounded-lg border-lime-600">
       <td>
@@ -22,9 +22,9 @@ const TableRow = (props) => {
         </p>
       </td>
       <td>
-        {(typeof products[card.id] !== 'undefined' && (
+        {(products[card.id] && (
           <p className="card__product--amount">In Cart Count: {products[card.id].count}</p>
-        )) || <p>&nbsp;</p>}
+        )) || <p className="invisible">&nbsp;</p>}
       </td>
       <td>
         <button

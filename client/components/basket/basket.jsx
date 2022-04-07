@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import Header from './header'
+import Header from '../header/header'
 import Products from './products'
 
 export const BASKET = 'Basket'
