@@ -136,7 +136,7 @@ export function sortGoodsServer(by) {
       url: 'api/v1/sort',
       data: {
         obj: products,
-        action: by
+        by
       }
     })
       .then(({ data }) => data)

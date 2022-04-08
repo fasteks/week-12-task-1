@@ -28,7 +28,8 @@ export default (state = initialState, action = {}) => {
 
 export function deleteLogs() {
   return async (dispatch) => {
-    await axios('/api/v1/logs')
+    await axios
+      .delete('/api/v1/logs')
       .then(() => {
         dispatch({ type: DELETE_LOGS, payload: [] })
       })

@@ -50,7 +50,7 @@ const config = {
     },
     proxy: [
       {
-        context: ['/api', '/auth', '/ws', '/favicon.ico'],
+        context: ['/api', '/auth', '/ws'],
         target: 'http://0.0.0.0:8090',
         secure: false,
         changeOrigin: true,

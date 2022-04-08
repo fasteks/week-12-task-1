@@ -112,13 +112,12 @@ server.post('/api/v1/logs', async (req, res) => {
 
 server.delete('/api/v1/logs', async (req, res) => {
   await unlink(`${__dirname}/data/logs.json`)
-  // res.json({ status: 'Deleted' })
   res.end()
 })
 
 server.post('/api/v1/sort', async (req, res) => {
-  const { obj, action } = req.body
-  const sortedProductsArray = await sortDataArray(obj, action)
+  const { obj, by } = req.body
+  const sortedProductsArray = await sortDataArray(obj, by)
   res.json(sortedProductsArray)
 })
 

@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { SORT_BY_NAME, SORT_BY_PRICE } from '../../../server/common/index'
-import { SORT_CARDS, sortByServer } from '../../redux/reducers/cards'
+import { sortCardsServer } from '../../redux/reducers/cards'
+// import { SORT_CARDS, sortByServer } from '../../redux/reducers/cards'
 import { sortGoodsServer } from '../../redux/reducers/goods'
 
 const Sorting = () => {
@@ -20,7 +21,8 @@ const Sorting = () => {
         onClick={() => {
           if (isClickedPrice) {
             setClickPrice(!isClickedPrice)
-            dispatch(sortByServer(SORT_CARDS, SORT_BY_PRICE))
+            // dispatch(sortByServer(SORT_CARDS, SORT_BY_PRICE))
+            dispatch(sortCardsServer(SORT_BY_PRICE))
             if (Object.keys(products).length !== 0) {
               dispatch(sortGoodsServer(SORT_BY_PRICE))
             }
@@ -40,7 +42,8 @@ const Sorting = () => {
         onClick={() => {
           if (isClickedName) {
             setClickName(!isClickedName)
-            dispatch(sortByServer(SORT_CARDS, SORT_BY_NAME))
+            // dispatch(sortByServer(SORT_CARDS, SORT_BY_NAME))
+            dispatch(sortCardsServer(SORT_BY_NAME))
             if (Object.keys(products).length !== 0) {
               dispatch(sortGoodsServer(SORT_BY_NAME))
             }

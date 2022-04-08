@@ -44,30 +44,54 @@ export function getCards() {
   }
 }
 
-export function sortByServer(obj, by) {
-  return async (dispatch, getStore) => {
+export function sortCardsServer(by) {
+  return async (dispatch, useState) => {
+    const { rates, currency } = useState().settings
+    const { cards } = useState().cards
     await axios({
       method: 'post',
-      url: 'api/v1/sortByServer',
+      url: 'api/v1/sort',
       data: {
-        obj,
+        obj: cards,
         by
       }
     })
       .then(({ data }) => data)
       .then((sortedArray) => {
-        if (obj === SORT_CARDS) {
-          const { rates, currency } = getStore().settings
-          const cardsArray = sortedArray.map((it) => {
-            const currenciedPrice = +it.price * +rates[currency]
-            const currenciedPriceFixed = currenciedPrice.toFixed(2)
-            return { ...it, priceCurrency: currenciedPriceFixed }
-          })
-          return dispatch({ type: SORT_CARDS, payload: cardsArray, sort: by })
-        }
-
-        return dispatch({ type: obj, sortedGoods: sortedArray, sort: by })
+        const cardsArray = sortedArray.map((it) => {
+          const currenciedPrice = +it.price * +rates[currency]
+          const currenciedPriceFixed = currenciedPrice.toFixed(2)
+          return { ...it, priceCurrency: currenciedPriceFixed }
+        })
+        dispatch({ type: SORT_CARDS, payload: cardsArray, sort: by })
       })
-      .catch((error) => error)
   }
 }
+
+// export function sortByServer(obj, by) {
+//   return async (dispatch, getStore) => {
+//     await axios({
+//       method: 'post',
+//       url: 'api/v1/sortByServer',
+//       data: {
+//         obj,
+//         by
+//       }
+//     })
+//       .then(({ data }) => data)
+//       .then((sortedArray) => {
+//         if (obj === SORT_CARDS) {
+//           const { rates, currency } = getStore().settings
+//           const cardsArray = sortedArray.map((it) => {
+//             const currenciedPrice = +it.price * +rates[currency]
+//             const currenciedPriceFixed = currenciedPrice.toFixed(2)
+//             return { ...it, priceCurrency: currenciedPriceFixed }
+//           })
+//           return dispatch({ type: SORT_CARDS, payload: cardsArray, sort: by })
+//         }
+
+//         return dispatch({ type: obj, sortedGoods: sortedArray, sort: by })
+//       })
+//       .catch((error) => error)
+//   }
+// }
