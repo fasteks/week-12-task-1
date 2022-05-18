@@ -52,7 +52,8 @@ const getGoods = () => {
         ...it,
         image: 'https://icons.iconarchive.com/icons/fi3ur/fruitsalad/128/lime-icon.png'
       }))
-      const slicedGoodsData = setNewImageSrc.slice(0, 50)
+      // const slicedGoodsData = setNewImageSrc.slice(0, 50)
+      const slicedGoodsData = setNewImageSrc
       await writeFile(`${__dirname}/data/goods.json`, JSON.stringify(slicedGoodsData), 'utf-8')
       return slicedGoodsData
     })
@@ -60,7 +61,16 @@ const getGoods = () => {
 
 server.get('/api/v1/goods', async (req, res) => {
   const goods = await getGoods()
-  res.json(goods)
+  const slicedGoodsData = goods.slice(0, 50)
+  res.json(slicedGoodsData)
+})
+
+server.post('/api/v1/usescroll', async (req, res) => {
+  const { length } = req.body
+  const goods = await getGoods()
+  const newLength = length + 10
+  const slicedGoodsData = goods.slice(0, newLength)
+  res.json(slicedGoodsData)
 })
 
 const getRates = () => {

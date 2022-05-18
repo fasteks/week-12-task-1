@@ -44,6 +44,30 @@ export function getCards() {
   }
 }
 
+export function getCardsUseScroll(length) {
+  return async (dispatch, useStore) => {
+    const store = useStore()
+    const { rates, currency } = store.settings
+    await axios({
+      method: 'post',
+      url: '/api/v1/usescroll',
+      data: {
+        length
+      }
+    })
+      .then(({ data }) => {
+        const cards = data
+        const cardsArray = cards.map((it) => {
+          const currenciedPrice = +it.price * +rates[currency]
+          const currenciedPriceFixed = currenciedPrice.toFixed(2)
+          return { ...it, priceCurrency: currenciedPriceFixed }
+        })
+        dispatch({ type: UPDATE_CARDS, payload: cardsArray })
+      })
+      .catch((error) => error)
+  }
+}
+
 export function sortCardsServer(by) {
   return async (dispatch, useState) => {
     const { rates, currency } = useState().settings

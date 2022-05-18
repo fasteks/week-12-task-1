@@ -14,8 +14,6 @@ const Main = () => {
   const { cards } = useSelector((s) => s.cards)
   const { rates } = useSelector((s) => s.settings)
 
-
-
   useEffect(() => {
     if (!rates[EUR_CURRENCY]) {
       dispatch(getRates())
