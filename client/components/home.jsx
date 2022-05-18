@@ -11,7 +11,7 @@ const Home = (props) => {
     <div className="h-screen">
       <Head title={props.location.pathname} />
       <Switch>
-        <Route exact path="/" component={Main} />
+        <Route exact path="/main" component={Main} />
         <Route exact path="/:basket" component={Basket} />
       </Switch>
     </div>
