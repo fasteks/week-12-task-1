@@ -7,8 +7,6 @@ import Table from './table'
 import { getCards } from '../../redux/reducers/cards'
 import { getRates, EUR_CURRENCY } from '../../redux/reducers/settings'
 
-// import useScroll from '../useScroll'
-
 export const MARKET = 'Market'
 
 const Main = () => {
@@ -16,8 +14,7 @@ const Main = () => {
   const { cards } = useSelector((s) => s.cards)
   const { rates } = useSelector((s) => s.settings)
 
-  // const { scrollY, scrollX, scrollDirection } = useScroll()
-  // console.log({ scrollY, scrollX, scrollDirection })
+
 
   useEffect(() => {
     if (!rates[EUR_CURRENCY]) {

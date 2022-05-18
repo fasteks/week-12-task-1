@@ -10,12 +10,11 @@ export default () => {
   const [scrollDirection, setScrollDirection] = useState('')
 
   const listener = () => {
-    console.log('asdasd')
     const rect = document.body.getBoundingClientRect()
     setBodyOffset(rect)
     setScrollY(-rect.top)
     setScrollX(-rect.left)
-    setScrollDirection(bodyOffset > rect.top ? 'down' : 'up')
+    setScrollDirection(bodyOffset.top > rect.top ? 'down' : 'up')
   }
 
   useEffect(() => {
